@@ -65,7 +65,7 @@ class TaskLists(models.Model):
         return self.list_name
 
 class TaskStatuses(models.Model):
-    '''Модлеь статусов задач'''
+    '''Модель статусов задач'''
     status_id = models.AutoField(primary_key=True)
     status_name = models.CharField(max_length=50)
 
@@ -77,3 +77,37 @@ class TaskStatuses(models.Model):
 
     def __str__(self):
         return self.status_name
+
+
+class Priorities(models.Model):
+    '''Модель приоритетов'''
+    priority_id = models.AutoField(primary_key=True)
+    priority_name = models.CharField(max_length=50)
+
+    class Meta:
+        db_table = 'priorities'
+        verbose_name = 'Priority'
+        verbose_name_plural = 'Priorities'
+        managed = False
+
+    def __str__(self):
+        return self.priority_name
+
+class Tasks(models.Model):
+    task_id = models.AutoField(primary_key=True)
+    list = models.ForeignKey(TaskLists, on_delete=models.CASCADE, related_name='tasks_lists')
+    start_date = models.DateField()
+    priority = models.ForeignKey(Priorities, on_delete=models.CASCADE, related_name='tasks_priorities')
+    status = models.ForeignKey(TaskStatuses, on_delete=models.CASCADE, related_name='tasks_statuses')
+    plan_finish_date = models.DateField()
+    description = models.TextField()
+
+    class Meta:
+        db_table = 'tasks'
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
+        managed = False
+
+
+    def __str__(self): # возможно стоит поменять
+        return self.description
