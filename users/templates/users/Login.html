@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Вход в систему</title>
+		<link rel="stylesheet" href="{% static 'css/style1.css' %}" />
+	</head>
+	<body class="auth-page">
+		<div class="auth-container">
+			<div class="auth-box">
+				<h1>Вход в систему</h1>
+				<form class="auth-form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{login_form.as_p}}
+{#					<input type="email" placeholder="Email" required />#}
+{#					<input type="password" placeholder="Пароль" required />#}
+					<button type="submit" class="btn-primary">Войти</button>
+				</form>
+				<p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+			</div>
+		</div>
+	</body>
+</html>

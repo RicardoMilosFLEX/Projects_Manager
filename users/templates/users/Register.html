@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <title>Авторизация</title>
+</head>
+    <body class="auth-page">
+		<div class="auth-container">
+			<div class="auth-box">
+				<h1>Регистрация</h1>
+				<form class="auth-form" method="post">
+                    {% csrf_token %}
+                    {{ register_form.as_p }}
+{#					<input type="text" placeholder="Имя" required />#}
+{#					<input type="email" placeholder="Email" required />#}
+{#					<input type="password" placeholder="Пароль" required />#}
+{#					<select name="role" required>#}
+{#						<option value="">Выберите роль</option>#}
+{#						<option value="worker">Работник</option>#}
+{#						<option value="manager">Менеджер</option>#}
+{#						<option value="admin">Администратор</option>#}
+{#					</select>#}
+					<button type="submit" class="button">Зарегистрироваться</button>
+				</form>
+				<p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+			</div>
+		</div>
+</body>
+</html>

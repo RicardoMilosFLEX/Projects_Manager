@@ -1,0 +1,38 @@
+.auth-page {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background-color: #f9fafc;
+}
+
+.auth-container {
+	width: 100%;
+	max-width: 400px;
+	padding: 20px;
+}
+.button{
+	background-color: forestgreen;
+}
+
+.auth-box {
+	background: #5096ff;
+	padding: 32px;
+	border-radius: 3px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin: 24px 0;
+}
+
+.auth-form input,
+.auth-form select {
+	padding: 8px;
+	border: 2px solid #dfe1e6;
+	border-radius: 3px;
+	font-size: 14px;
+}

@@ -1,0 +1,36 @@
+.topic {
+    background-color: cornflowerblue;
+    padding: 20px;
+}
+
+.greeting-nav {
+    display: block;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.greeting {
+    margin: 0;
+    font-size: 1.5em;
+    color: #464b4a;
+    text-align: center;
+}
+
+.auth-links a {
+    margin-left: 10px;
+    text-decoration: none;
+    text-align: end;
+}
+
+.auth-links .btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+		Ubuntu, Cantarell, sans-serif;
+	background-color: #f9fafc;
+	color: #172b4d;
+}

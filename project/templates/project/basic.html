@@ -3,19 +3,26 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width = device-width">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <link >
-    <title>Главная страница</title>
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link type="image/x-icon" href="{% static 'img/favicon(3).ico'%}" rel="shortcut icon">
+    <title>ProjectSea</title>
 </head>
 <body>
+<header>
     <div class="topic">
-        <div>
-            <h1>Менеджер проекта</h1>
-
-        </div>
-        <div class="register">
+        <div class="greeting-nav">
+            <h1 class="greeting">
+                Добро пожаловать в ProjectSea
+            </h1>
+            <div class="auth-links">
+                <a href="{% url 'register' %}" class="btn btn-outline-primary">Регистрация</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти</a>
+            </div>
         </div>
     </div>
+</header>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>

@@ -1,6 +1,9 @@
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
+import users.models
+
+
 class Clients(models.Model):
     '''Модель клиентов'''
     client_id = models.AutoField(primary_key=True)
@@ -10,8 +13,7 @@ class Clients(models.Model):
     email = models.EmailField(max_length=50, unique=True)
     phone = PhoneNumberField(unique=True, region='RU')
 
-    def __str__(self):
-        return self.surname
+
 
     class Meta:
         db_table = 'clients'
@@ -109,5 +111,38 @@ class Tasks(models.Model):
         managed = False
 
 
-    def __str__(self): # возможно стоит поменять
+    def __str__(self):
         return self.description
+
+
+class Projects(models.Model):
+    project_id = models.AutoField(primary_key=True)
+    project_name = models.CharField(max_length=50)
+    description = models.TextField()
+    status = models.ForeignKey(ProjectStatuses,
+                               on_delete=models.CASCADE,
+                               related_name='project_statuses',
+                               to_field='status_id')
+    responsible = models.ForeignKey(users.models.Responsible,
+                                    on_delete=models.CASCADE,
+                                    related_name='project_responsible')
+    plan_start_date = models.DateField()
+    plan_finish_date = models.DateField()
+    client = models.ForeignKey(Clients,
+                               on_delete=models.CASCADE,
+                               related_name='project_clients')
+    type = models.ForeignKey(ProjectTypes,
+                             on_delete=models.CASCADE,
+                             related_name='project_types')
+    tasks_list = models.ForeignKey(TaskLists,
+                                  on_delete=models.CASCADE,
+                                  related_name='project_task_lists')
+
+    class Meta:
+        managed = False
+        db_table = 'projects'
+        verbose_name = 'Project'
+        verbose_name_plural = 'Projects'
+
+    def __str__(self):
+        return self.project_name
