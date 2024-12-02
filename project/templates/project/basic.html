@@ -16,8 +16,13 @@
                 Добро пожаловать в ProjectSea
             </h1>
             <div class="auth-links">
-                <a href="{% url 'register' %}" class="btn btn-outline-primary">Регистрация</a>
-                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти</a>
+                {% if user.is_authenticated %}
+                    <h3>Пользователь: {{ user }}</h3>
+                    <a href="{% url 'logout' %}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Регистрация</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти</a>
+                {% endif %}
             </div>
         </div>
     </div>

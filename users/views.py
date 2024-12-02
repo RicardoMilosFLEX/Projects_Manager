@@ -1,11 +1,10 @@
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.urls import reverse
 
 from users.forms import EmailAuthenticationForm, CustomUserCreationForm
-from users.models import Workers
 
 
 def login(request):
@@ -31,10 +30,16 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
+            form.save()
             return HttpResponseRedirect(reverse('index'))
+        else:
+            print(form.errors)
+            messages.error(request, form.errors)
     else:
         form = CustomUserCreationForm()
     context = {'register_form': form}
     return render(request, 'users/Register.html', context)
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('index'))

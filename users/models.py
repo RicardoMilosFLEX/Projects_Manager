@@ -1,7 +1,9 @@
+from enum import unique
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
-from django.db.models import Model
+from django.db.models import Model, CharField
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
@@ -59,22 +61,22 @@ class Workers(AbstractUser):
     first_name = models.CharField(max_length=50)
     father_name = models.CharField(max_length=50 , blank=True, null=True)
     email = models.EmailField(max_length=50, unique=True)
-    phone = PhoneNumberField(region='RU', unique=True)
+    phone = CharField(max_length=50, blank=True, null=True)
     work_phone = models.CharField(max_length=6, unique=True, blank=True, null=True)
     position = models.ForeignKey(ListPositions,
                                     on_delete=models.CASCADE,
                                     related_name='position',
                                     to_field='position_id')
-    group_name = models.ForeignKey(WorkersGroups, on_delete=models.CASCADE,
+    group_name = models.ForeignKey(WorkersGroups, on_delete=models.SET_NULL,
                                    related_name='group', blank=True, null=True)
     password = models.CharField(max_length=500)
-    date_joined = models.DateTimeField('date joined', auto_now_add=True)
+
 
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name','last_name','phone','position','password',]
     def __str__(self):
           return self.email
 
@@ -110,8 +112,9 @@ class Workers(AbstractUser):
     @property
     def is_staff(self):
         return False
-    def has_perm(self, perm, obj=None):
-        return True  # Настройте на основе логики вашего приложения
+
+    def get_username(self):
+        return self.email
 
     def has_module_perms(self, app_label):
         return True
