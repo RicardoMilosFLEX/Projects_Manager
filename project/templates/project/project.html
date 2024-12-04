@@ -1,16 +1,17 @@
 {% extends 'project/basic.html' %}
 {% block content %}
     <div>
+        <a href="{% url 'index' %}">На главную</a>
         <h2>Список проектов:</h2>
         <div class="projects">
         {% if projects %}
             {% for project in projects %}
                 <div class="project">
-                        <h1>{{ project.project_name}}</h1>
-                        <p>{{ project.description }}</p>
-                        <p>{{ project.status }}</p>
-                        <p>{{ project.responsible }}</p>
-                        <p>{{ project.client.name}} {{ project.client.surname }} {{ project.client.email }}</p>
+                        <h1>Название: {{ project.project_name}}</h1>
+                        <p>Описание: {{ project.description }}</p>
+                        <p>Статус: {{ project.status }}</p>
+                        <p>Ответственный: {{ project.responsible.name }} {{ project.responsible.surname }}</p>
+                        <p>Клиент: {{ project.client.name}} {{ project.client.surname }}, Почта - {{ project.client.email }}</p>
                 </div>
             {% endfor %}
         {% endif %}

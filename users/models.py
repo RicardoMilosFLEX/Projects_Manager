@@ -1,5 +1,3 @@
-from enum import unique
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import User, AbstractUser
 from django.db import models
@@ -39,7 +37,10 @@ class WorkersGroups(models.Model):
     #     return self.group_id
 
 class CustomUserManager(BaseUserManager):
+    '''Класс для управления моделью пользователя'''
+
     def create_user(self, email, password=None, **extra_fields):
+        '''Логика создания нового пользователя'''
         if not email:
             raise ValueError('Users must have an email address')
         email = self.normalize_email(email)
@@ -49,6 +50,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_fields):
+        '''Логика создания суперпользователя'''
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)

@@ -13,12 +13,22 @@
     <div class="topic">
         <div class="greeting-nav">
             <h1 class="greeting">
-                Добро пожаловать в ProjectSea
+                ProjectSea
             </h1>
             <div class="auth-links">
                 {% if user.is_authenticated %}
-                    <h3>Пользователь: {{ user }}</h3>
+                    <h3>Пользователь: {{ user.first_name }} {{ user.last_name }} - {{ user.position }}</h3>
+
                     <a href="{% url 'logout' %}">Выйти</a>
+                    {% if user.position_id == 1 %}
+                        <a href="{% url 'create_project' %}">Создать новый проект</a>
+                        <a href="{% url 'projects' %}">Посмотреть проекты</a>
+                        <a href="{% url 'managers_info' %}">Посмотреть информацию о менеджерах</a>
+                    {% elif user.position_id == 2 %}
+                        <h1>Пока тут пусто</h1>
+                    {% else %}
+                        <h2>Пока не работает</h2>
+                    {% endif %}
                 {% else %}
                     <a href="{% url 'register' %}" class="btn btn-outline-primary">Регистрация</a>
                     <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти</a>

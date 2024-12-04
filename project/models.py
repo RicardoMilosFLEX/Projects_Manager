@@ -13,7 +13,8 @@ class Clients(models.Model):
     email = models.EmailField(max_length=50, unique=True)
     phone = PhoneNumberField(unique=True, region='RU')
 
-
+    def __str__(self):
+        return self.email
 
     class Meta:
         db_table = 'clients'
@@ -136,7 +137,8 @@ class Projects(models.Model):
                              related_name='project_types')
     tasks_list = models.ForeignKey(TaskLists,
                                   on_delete=models.CASCADE,
-                                  related_name='project_task_lists')
+                                  related_name='project_task_lists',
+                                   blank=True, null=True)
 
     class Meta:
         managed = False

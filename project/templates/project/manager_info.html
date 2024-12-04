@@ -1,0 +1,19 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+    <a href="{% url 'index' %}">На главную</a>
+    {% if managers %}
+        {% for manager in managers %}
+            <div class="managers">
+                <div class="manager">
+                    <h2>ФИО: {{ manager.surname }} {{ manager.name }}</h2>
+                    <h2>Почта: {{ manager.email }}</h2>
+                    <h2>Проекты</h2>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+            <h2>Здесь пока пусто</h2>
+    {% endif %}
+    </div>
+{% endblock %}

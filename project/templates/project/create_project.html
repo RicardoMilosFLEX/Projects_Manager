@@ -1,0 +1,10 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div class ='create_project'>
+    <form method="post">
+        {% csrf_token %}
+        {{ start_project_form.as_p }}
+        <button type="submit">Создать</button>
+    </form>
+    </div>
+{% endblock %}

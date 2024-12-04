@@ -3,11 +3,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import auth, messages
 from django.urls import reverse
+from django.contrib.auth import login
 
 from users.forms import EmailAuthenticationForm, CustomUserCreationForm
 
 
 def login(request):
+    '''Авторизация пользователя'''
     if request.method == 'POST':
         form = EmailAuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -27,19 +29,19 @@ def login(request):
 
 
 def register(request):
+    '''Регистрация нового пользователя'''
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return HttpResponseRedirect(reverse('index'))
-        else:
-            print(form.errors)
-            messages.error(request, form.errors)
     else:
         form = CustomUserCreationForm()
     context = {'register_form': form}
     return render(request, 'users/Register.html', context)
 
 def logout(request):
+    '''Выход из аккаунта пользователя'''
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
