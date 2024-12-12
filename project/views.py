@@ -1,10 +1,12 @@
+from lib2to3.fixes.fix_input import context
+
 from django.urls import reverse
 
 from django.http import HttpResponseRedirect
 
 from django.shortcuts import render
 
-from project.forms import ProjectForm
+from project.forms import ProjectForm, TaskForm
 from project.models import Projects
 from users.models import Workers, Responsible
 
@@ -35,7 +37,7 @@ def show_all_managers(request):
     return render(request, 'project/manager_info.html', {'managers' : managers})
 def create_project(request):
     '''
-    Метод возвращает страницу по созданию проекта
+    Метод возвращает страницу по созданию проекта (для администраторов)
     :param request:
     :return: create_project.html
     '''
@@ -59,3 +61,21 @@ def manage(request):
     :return:
     '''
     pass
+
+def create_task(request):
+    '''
+
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        form = TaskForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            print(form.errors)
+    else:
+        form = TaskForm()
+    context = {'start_task_form': form}
+    return render(request, 'project/create_tasks.html', context)

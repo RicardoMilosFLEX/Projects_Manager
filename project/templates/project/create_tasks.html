@@ -1,0 +1,10 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div class="">
+        <form method="post" class="create_task">
+            {% csrf_token %}
+            {{ start_task_form.as_p }}
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}

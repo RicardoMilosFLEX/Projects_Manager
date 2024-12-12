@@ -1,7 +1,7 @@
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib import auth, messages
+from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth import login
 
@@ -13,7 +13,7 @@ def login(request):
     if request.method == 'POST':
         form = EmailAuthenticationForm(data=request.POST)
         if form.is_valid():
-            email = request.POST['email']
+            email = request.POST['username']
             password = request.POST['password']
             user = auth.authenticate(username=email, password=password)
             if user:
@@ -27,7 +27,13 @@ def login(request):
     context = {'login_form': form}
     return render(request, 'users/Login.html', context)
 
+def change_user(request):
+    '''Редактирование пользователя'''
+    pass
 
+def delete_user(request):
+    '''Удаление пользователя'''
+    pass
 def register(request):
     '''Регистрация нового пользователя'''
     if request.method == 'POST':

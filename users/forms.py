@@ -1,16 +1,22 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from users.models import Workers
 
 class CustomUserCreationForm(forms.ModelForm):
     '''Форма для создания пользователя'''
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirm', widget=forms.PasswordInput)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput)
 
     class Meta:
         model = Workers
         fields = ('last_name', 'first_name', 'father_name', 'email', 'position','password')
+        labels = {
+            'last_name': 'Фамилия',
+            'first_name': 'Имя',
+            'father_name': 'Отчество',
+            'position': 'Должность'
+        }
 
     def clean_password2(self):
         '''Метод проверки на совпадение паролей'''
@@ -30,8 +36,9 @@ class CustomUserCreationForm(forms.ModelForm):
 
 class EmailAuthenticationForm(AuthenticationForm):
     '''Форма авторизации пользователя'''
-    email = forms.EmailField(label='Email', widget=forms.EmailInput)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    username = forms.EmailField(label='Email', widget=forms.EmailInput)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+
     class Meta:
         model = Workers
-        fields = ('email','password')
+        fields = ('username','password')
