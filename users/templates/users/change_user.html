@@ -1,0 +1,13 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+    <h2>Редактирование сотрудника</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ change_user_form.as_p }}
+    <button type="submit">Изменить</button>
+    </form>
+        <a href="{% url 'show_users' %}">К списку пользователей</a>
+    </div>
+
+{% endblock %}

@@ -34,7 +34,12 @@ def show_all_managers(request):
     :return:
     '''
     managers = Responsible.objects.all()
-    return render(request, 'project/manager_info.html', {'managers' : managers})
+    projects = Projects.objects.all()
+    context = {
+        'managers': managers,
+        'projects': projects,
+    }
+    return render(request, 'project/manager_info.html', context)
 def create_project(request):
     '''
     Метод возвращает страницу по созданию проекта (для администраторов)

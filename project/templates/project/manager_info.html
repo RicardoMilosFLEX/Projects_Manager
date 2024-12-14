@@ -8,7 +8,21 @@
                 <div class="manager">
                     <h2>ФИО: {{ manager.surname }} {{ manager.name }}</h2>
                     <h2>Почта: {{ manager.email }}</h2>
-                    <h2>Проекты</h2>
+                    <h2>Проекты менеджера:</h2>
+                    {% if projects %}
+                        {% for project in projects %}
+                            {% if project.responsible == manager %}
+                              <div class="">
+                                  <h2>Название: {{ project.project_name }}</h2>
+                                  <p>Описание: {{ project.description }}</p>
+                                  <p>Клиент: {{ project.client }}</p>
+                                  <p>Статус: {{ project.status }}</p>
+                              </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% else %}
+                        <h2>Проектов пока нет</h2>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

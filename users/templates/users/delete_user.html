@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Удаление пользователя</title>
+</head>
+<body>
+    <div class="worker">
+        <h2>ID-{{ worker.worker_id }}</h2>
+        <h2>ФИО:
+            {{ worker.last_name }}
+            {{ worker.first_name }}
+            {{ worker.father_name }}
+        </h2>
+        <p>Email: {{ worker.email }}</p>
+        <!-- Ссылка на редактирование -->
+        <a href="{% url 'change_user' worker.worker_id %}">Изменить</a> |
+        <!-- Ссылка на удаление -->
+        <a href="{% url 'delete_user' worker.worker_id %}" onclick="return confirm('Вы уверены, что хотите удалить этого пользователя?');">Удалить</a>
+
+</div>
+
+</body>
+</html>

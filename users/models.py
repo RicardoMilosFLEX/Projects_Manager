@@ -70,7 +70,7 @@ class Workers(AbstractUser):
     phone = CharField(max_length=50, blank=True, null=True)
     work_phone = models.CharField(max_length=6, unique=True, blank=True, null=True)
     position = models.ForeignKey(ListPositions,
-                                    on_delete=models.CASCADE,
+                                    on_delete=models.PROTECT,
                                     related_name='position',
                                     to_field='position_id')
     group_name = models.ForeignKey(WorkersGroups, on_delete=models.SET_NULL,

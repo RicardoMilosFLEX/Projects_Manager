@@ -42,3 +42,21 @@ class EmailAuthenticationForm(AuthenticationForm):
     class Meta:
         model = Workers
         fields = ('username','password')
+
+class ChangeUser(forms.ModelForm):
+    '''Форма изменения пользователя'''
+    class Meta:
+        model = Workers
+        fields = ('last_name', 'first_name',
+                  'father_name', 'email',
+                  'group_name','phone','work_phone',
+                  )
+        labels = {
+            'last_name': 'Фамилия',
+            'first_name': 'Имя',
+            'father_name': 'Отчество',
+            'email': "Почта",
+            'group_name': 'Группа сотрудника',
+            'phone': 'Телефон',
+            'work_phone': 'Рабочий телефон',
+        }

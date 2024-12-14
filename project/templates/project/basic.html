@@ -24,11 +24,13 @@
                         <a href="{% url 'create_project' %}">Создать новый проект</a>
                         <a href="{% url 'projects' %}">Посмотреть проекты</a>
                         <a href="{% url 'managers_info' %}">Посмотреть информацию о менеджерах</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-primary">
+                        <a href="{% url 'register' %}">
                             Регистрация нового пользователя
                         </a>
+                        <a href="{% url 'show_users' %}">Список пользователей</a>
                     {% elif user.position_id == 2 %}
                         <a href="{% url 'create_task' %}">Создать задачу по проекту</a>
+                        <a href="">Посмотреть проекты</a>
                     {% else %}
                         <h2>Пока не работает</h2>
                     {% endif %}

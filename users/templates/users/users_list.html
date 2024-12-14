@@ -1,0 +1,38 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div class="workers">
+        <div class="worker">
+            {% for worker in workers %}
+                <h2>ID-{{ worker.worker_id }}</h2>
+                <h2>ФИО:
+                    {{ worker.last_name }}
+                    {{ worker.first_name }}
+                    {{ worker.father_name }}
+                </h2>
+                <p>
+                    <p>Email: {{ worker.email }}</p>
+                    {% if worker.phone %}
+                        <p>Телефон: {{ worker.phone }}</p>
+                    {% else %}
+                        <p>Нет телефона </p>
+                    {% endif %}
+                    {% if worker.worker_phone %}
+                        <p>Рабочий телефон: {{ worker.work_phone }}</p>
+                    {% else %}
+                        <p>Нет рабочего телефона</p>
+                    {% endif %}
+                    <p>Должность: {{ worker.position }}</p>
+                    {% if worker.group_name %}
+                        <p>Группа сотрудников: {{ worker.group_name }}</p>
+                    {% else %}
+                        <p>Не состоит в группе</p>
+                    {% endif %}
+                </p>
+                <p>
+                    <a href="{% url 'change_user' worker.worker_id%}">Изменить пользователя</a> |
+                    <a href="{% url 'show_delete_user' worker.worker_id%}">Удалить пользователя</a>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

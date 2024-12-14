@@ -1,13 +1,14 @@
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth import login
 
-from users.forms import EmailAuthenticationForm, CustomUserCreationForm
+from users.forms import EmailAuthenticationForm, CustomUserCreationForm, ChangeUser
+from users.models import Workers
 
-
+import logging
 def login(request):
     '''Авторизация пользователя'''
     if request.method == 'POST':
@@ -27,13 +28,51 @@ def login(request):
     context = {'login_form': form}
     return render(request, 'users/Login.html', context)
 
-def change_user(request):
-    '''Редактирование пользователя'''
-    pass
 
-def delete_user(request):
+
+def show_users(request):
+    '''Отображение всех работников'''
+    workers = Workers.objects.all()
+    workers = workers.order_by('last_name', 'first_name')
+    context = {'workers': workers}
+    return render(request, 'users/users_list.html', context)
+
+
+# ЭТОТ КОД НУЖНО ИСПРАВИТЬ. РАБОТАЕТ НЕ СОВСЕМ КОРРЕКТНО
+logging.basicConfig(level=logging.INFO, filename="views.py",filemode="w")
+logger = logging.getLogger(__name__)
+# ЛОГИ УБРАТЬ в другой файл ПОТОМ
+def change_user(request, worker_id):
+    '''Редактирование пользователя'''
+    logger.info(f"Текущий пользователь: {worker_id}")
+    worker = get_object_or_404(Workers, pk=worker_id)
+    logger.info(f"Изменяемый сотрудник: {worker.last_name} {worker.first_name}, ID-{worker.worker_id}")
+    if request.method == 'POST':
+        form = ChangeUser(request.POST, instance=worker)
+        if form.is_valid():
+            form.save()
+            logger.info(f"Изменения сохранены администратором:")
+            return HttpResponseRedirect(reverse('show_users'))
+    else:
+        form = ChangeUser(instance=worker)
+    context = {'user': worker, 'change_user_form': form}
+    return render(request, 'users/change_user.html', context)
+
+
+
+def show_delete_user(request, worker_id):
+    '''Отобрадение пользователя для удаления'''
+    worker = Workers.objects.get(pk=worker_id)
+    context = {'worker': worker}
+    return render(request, 'users/delete_user.html', context)
+
+
+def delete_user(request , worker_id):
     '''Удаление пользователя'''
-    pass
+    worker = get_object_or_404(Workers, pk=worker_id)
+    worker.delete()
+    return HttpResponseRedirect(reverse('show_users'))
+
 def register(request):
     '''Регистрация нового пользователя'''
     if request.method == 'POST':
@@ -41,7 +80,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('show_users'))
     else:
         form = CustomUserCreationForm()
     context = {'register_form': form}

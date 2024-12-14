@@ -6,5 +6,5 @@ from users.urls import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('project.urls')),
-    path('login/', include('users.urls')),
+    path('users/', include('users.urls')),
 ]
