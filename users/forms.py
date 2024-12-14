@@ -1,6 +1,8 @@
 
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
+
+from project.models import Projects
 from users.models import Workers
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -60,3 +62,5 @@ class ChangeUser(forms.ModelForm):
             'phone': 'Телефон',
             'work_phone': 'Рабочий телефон',
         }
+
+

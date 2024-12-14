@@ -4,10 +4,10 @@ from django.urls import reverse
 
 from django.http import HttpResponseRedirect
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from project.forms import ProjectForm, TaskForm
-from project.models import Projects
+from project.forms import ProjectForm, TaskForm, ChangeProjectForm
+from project.models import Projects, Tasks, TaskLists
 from users.models import Workers, Responsible
 
 
@@ -26,7 +26,8 @@ def show_project(request):
     '''
     users = Workers.objects.all()
     projects = Projects.objects.all()
-    return render(request, 'project/project.html', {'projects': projects,'users':users})
+    context = {'users': users, 'projects': projects}
+    return render(request, 'project/project.html', context)
 def show_all_managers(request):
     '''
     Метод отображения менеджеров для администраторов
@@ -59,14 +60,24 @@ def create_project(request):
     context = {'start_project_form': form}
     return render(request, 'project/create_project.html', context)
 
-def manage(request):
+def change_project(request, project_id):
     '''
-    Метод возвращает страницу для изменения данных в проекте
+    Метод возвращает страницу для изменения проетка для администратора
     :param request:
+    :param project_id:
     :return:
     '''
-    pass
+    project = get_object_or_404(Projects, pk=project_id)
+    if request.method == 'POST':
+        form = ChangeProjectForm(data=request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('projects'))
+    else:
 
+        form = ChangeProjectForm(instance=project)
+    context = {'change_project_form': form}
+    return render(request, 'project/change_project.html', context)
 def create_task(request):
     '''
 
@@ -84,3 +95,21 @@ def create_task(request):
         form = TaskForm()
     context = {'start_task_form': form}
     return render(request, 'project/create_tasks.html', context)
+
+def show_projects_for_managers(request, manager_id):
+    '''
+    Отображает проекты для конкретного менеджера
+    :param request:
+    :return:
+    '''
+    projects = Projects.objects.filter(responsible=manager_id)
+    context = {'projects': projects}
+    return render(request, 'project/show_projects_for_managers.html', context)
+
+
+def show_tasks_for_managers(request, task_list):
+    '''Отображение задач по проекту для менеджеров'''
+    list_id = get_object_or_404(TaskLists, list_name=task_list)
+    tasks = Tasks.objects.filter(list=list_id)
+    context = {'tasks': tasks}
+    return render(request, 'project/show_tasks.html', context)

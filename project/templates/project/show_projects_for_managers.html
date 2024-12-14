@@ -1,0 +1,23 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+        {% if projects %}
+            {% for project in projects %}
+                <h2>Название проекта: {{ project.project_name }}</h2>
+                <p>Описание проекта: {{ project.description }}</p>
+                <p>Статус проекта: {{ project.status }}</p>
+                <p>Дата старта проекта: {{ project.plan_start_date }}</p>
+                <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
+                <p>Тип проекта: {{ project.type }}</p>
+                {% if project.tasks_list %}
+                <p>
+                    <a href="{% url 'show_tasks_list' project.tasks_list%}">Задачи по проекту</a></p>
+                {% else %}
+                    <p>Задачи не назначены на проект</p>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <h2>Вам пока не назначены проекты.</h2>
+        {% endif %}
+    </div>
+{% endblock %}

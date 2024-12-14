@@ -1,5 +1,3 @@
-from cProfile import label
-
 from django import forms
 
 from project.models import Projects, Tasks
@@ -49,4 +47,30 @@ class TaskForm(forms.ModelForm):
             'list':'Список задач',
             'status':'Статус',
             'priority':'Приоритет',
+        }
+
+class ChangeProjectForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = ('project_name', 'description',
+                  'status', 'responsible',
+                  'plan_start_date', 'plan_finish_date',
+                  'client', 'type', 'tasks_list')
+        widgets = {
+            'plan_start_date': forms.DateInput(
+                attrs={'type': 'date', 'class': 'datepicker'}
+            ),
+            'plan_finish_date': forms.DateInput(
+                attrs={'type': 'date', 'class': 'datepicker'}
+            )
+        }
+
+        labels = {
+            'project_name' : 'Название проекта',
+            'description' : 'Описание проекта',
+            'status' : 'Статус',
+            'responsible' : 'Ответственный',
+            'client' : 'Клиент',
+            'type': 'Тип проекта',
+            'tasks_list': 'Список задач',
         }

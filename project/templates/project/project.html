@@ -12,8 +12,11 @@
                         <p>Статус: {{ project.status }}</p>
                         <p>Ответственный: {{ project.responsible.name }} {{ project.responsible.surname }}</p>
                         <p>Клиент: {{ project.client.name}} {{ project.client.surname }}, Почта - {{ project.client.email }}</p>
+                        <h3><a href="{% url 'change_project' project.project_id %}">Редактировать</a></h3>
                 </div>
             {% endfor %}
+        {% else %}
+            <h2>Проектов пока нет</h2>
         {% endif %}
         </div>
     </div>

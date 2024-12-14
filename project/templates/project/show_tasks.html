@@ -1,0 +1,16 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+        {% if tasks %}
+            {% for task in tasks %}
+                <h2>{{ task.description }}</h2>
+                <p>{{ task.start_date }}</p>
+                <p>{{ task.plan_finish_date }}</p>
+                <p>{{ task.priority }}</p>
+                <p>{{ task.status }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Задач по проекту нет.</p>
+        {% endif %}
+    </div>
+{% endblock %}
