@@ -89,6 +89,7 @@ class ChangeTaskForm(forms.ModelForm):
         fields = ('description','list',
                   'priority', 'status',
                   'start_date','plan_finish_date',
+                  'responsible_worker',
                   )
         labels = {
             'description': 'Описание',
@@ -97,4 +98,5 @@ class ChangeTaskForm(forms.ModelForm):
             'status': 'Статус',
             'start_date': 'Дата начала',
             'plan_finish_date': 'Дата окончания',
+            'responsible_worker': 'Ответственный'
         }

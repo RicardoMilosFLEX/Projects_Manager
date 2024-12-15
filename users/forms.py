@@ -12,12 +12,13 @@ class CustomUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = Workers
-        fields = ('last_name', 'first_name', 'father_name', 'email', 'position','password')
+        fields = ('last_name', 'first_name', 'father_name', 'email','phone', 'position','password')
         labels = {
             'last_name': 'Фамилия',
             'first_name': 'Имя',
             'father_name': 'Отчество',
-            'position': 'Должность'
+            'position': 'Должность',
+            'phone': 'Телефон',
         }
 
     def clean_password2(self):
@@ -52,6 +53,7 @@ class ChangeUser(forms.ModelForm):
         fields = ('last_name', 'first_name',
                   'father_name', 'email',
                   'group_name','phone','work_phone',
+                  'position',
                   )
         labels = {
             'last_name': 'Фамилия',
@@ -61,6 +63,7 @@ class ChangeUser(forms.ModelForm):
             'group_name': 'Группа сотрудника',
             'phone': 'Телефон',
             'work_phone': 'Рабочий телефон',
+            'position': 'Должность',
         }
 
 

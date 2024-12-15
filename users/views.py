@@ -91,8 +91,7 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            form.save()
             return HttpResponseRedirect(reverse('show_users'))
     else:
         form = CustomUserCreationForm()

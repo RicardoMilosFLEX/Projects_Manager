@@ -19,6 +19,11 @@
                 <p>Дата окончания: {{ task.plan_finish_date }}</p>
                 <p>Приоритет задачи: {{ task.priority }}</p>
                 <p>Статус задачи: {{ task.status }}</p>
+                {% if task.responsible_worker.last_name %}
+                <p>Ответственный: {{ task.responsible_worker.last_name }} {{ task.responsible_worker.first_name }}</p>
+                {% else %}
+                <p>Ответственный не назначен</p>
+                {% endif %}
                 <a href="{% url 'change_task' task.task_id %}">Редактировать задачу</a>
             {% endfor %}
         {% else %}

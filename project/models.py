@@ -104,6 +104,9 @@ class Tasks(models.Model):
     status = models.ForeignKey(TaskStatuses, on_delete=models.CASCADE, related_name='tasks_statuses')
     plan_finish_date = models.DateField()
     description = models.TextField()
+    responsible_worker = models.ForeignKey(users.models.Workers, on_delete=models.SET_NULL,
+                                              related_name='responsible_workers', blank=True, null=True,
+                                           limit_choices_to={'position': 3})
 
     class Meta:
         db_table = 'tasks'
