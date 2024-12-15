@@ -1,13 +1,14 @@
 {% extends 'project/basic.html' %}
 {% block content %}
     <div>
+        <h3><a href="{% url 'check_projects_for_manager' user.worker_id %}">К списку ваших проектов</a></h3>
         {% if tasks %}
             {% for task in tasks %}
-                <h2>{{ task.description }}</h2>
-                <p>{{ task.start_date }}</p>
-                <p>{{ task.plan_finish_date }}</p>
-                <p>{{ task.priority }}</p>
-                <p>{{ task.status }}</p>
+                <h2>Описание: {{ task.description }}</h2>
+                <p>Дата начала: {{ task.start_date }}</p>
+                <p>Дата окончания: {{ task.plan_finish_date }}</p>
+                <p>Приоритет задачи: {{ task.priority }}</p>
+                <p>Статус задачи: {{ task.status }}</p>
             {% endfor %}
         {% else %}
             <p>Задач по проекту нет.</p>

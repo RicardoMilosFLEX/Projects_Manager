@@ -2,6 +2,16 @@
 {% block content %}
     <div>
         <a href="{% url 'index' %}">На главную</a>
+        <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+    <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
         <h2>Список проектов:</h2>
         <div class="projects">
         {% if projects %}

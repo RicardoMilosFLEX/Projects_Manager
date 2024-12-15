@@ -74,3 +74,7 @@ class ChangeProjectForm(forms.ModelForm):
             'type': 'Тип проекта',
             'tasks_list': 'Список задач',
         }
+
+
+# class SortProjectsForm(forms.ModelForm):
+#     sort_by = forms.ChoiceField(choices=SORT_CHOICES, required=False)
