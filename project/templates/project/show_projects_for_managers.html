@@ -1,6 +1,16 @@
 {% extends 'project/basic.html' %}
 {% block content %}
     <div>
+    <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+        <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+        </select>
+    </form>
         {% if projects %}
             {% for project in projects %}
                 <h2>Название проекта: {{ project.project_name }}</h2>

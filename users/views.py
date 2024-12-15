@@ -28,13 +28,26 @@ def login(request):
     context = {'login_form': form}
     return render(request, 'users/Login.html', context)
 
+def show_and_sort_users(request):
+    '''
+    Метод для отображения пользователей и их сортировки
+    :param request:
+    :return:
+    '''
+    sort_by = request.GET.get('sort_by', 'last_name')
 
-
-def show_users(request):
-    '''Отображение всех работников'''
-    workers = Workers.objects.all()
-    workers = workers.order_by('last_name', 'first_name')
-    context = {'workers': workers}
+    ALLOWED_SORT_FIELDS = {
+        'last_name': 'Фамилия',
+        'first_name': 'Имя',
+        'position': "Должность",
+    }
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'last_name'
+    workers = Workers.objects.all().order_by(sort_by)
+    context = {'workers': workers,
+               'sort_by': sort_by,
+               'sort_fields': ALLOWED_SORT_FIELDS
+               }
     return render(request, 'users/users_list.html', context)
 
 

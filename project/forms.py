@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Model
 
 from project.models import Projects, Tasks
 
@@ -76,5 +77,24 @@ class ChangeProjectForm(forms.ModelForm):
         }
 
 
-# class SortProjectsForm(forms.ModelForm):
-#     sort_by = forms.ChoiceField(choices=SORT_CHOICES, required=False)
+class ChangeTaskForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.DateInput(
+        attrs={'type': 'date', 'class': 'datepicker'}
+    ))
+    plan_finish_date = forms.DateField(widget=forms.DateInput(
+        attrs={'type': 'date', 'class': 'datepicker'}
+    ))
+    class Meta:
+        model = Tasks
+        fields = ('description','list',
+                  'priority', 'status',
+                  'start_date','plan_finish_date',
+                  )
+        labels = {
+            'description': 'Описание',
+            'list': 'Список задач',
+            'priority': 'Приоритет',
+            'status': 'Статус',
+            'start_date': 'Дата начала',
+            'plan_finish_date': 'Дата окончания',
+        }

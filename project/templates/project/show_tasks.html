@@ -2,6 +2,16 @@
 {% block content %}
     <div>
         <h3><a href="{% url 'check_projects_for_manager' user.worker_id %}">К списку ваших проектов</a></h3>
+    <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+    <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
         {% if tasks %}
             {% for task in tasks %}
                 <h2>Описание: {{ task.description }}</h2>
@@ -9,9 +19,15 @@
                 <p>Дата окончания: {{ task.plan_finish_date }}</p>
                 <p>Приоритет задачи: {{ task.priority }}</p>
                 <p>Статус задачи: {{ task.status }}</p>
+                <a href="{% url 'change_task' task.task_id %}">Редактировать задачу</a>
             {% endfor %}
         {% else %}
             <p>Задач по проекту нет.</p>
         {% endif %}
+    <br>
+    <br>
+        <h3>
+            <a href="{% url 'create_task' %}">Добавить задачу</a>
+        </h3>
     </div>
 {% endblock %}

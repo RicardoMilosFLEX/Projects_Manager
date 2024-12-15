@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 
 from django.shortcuts import render, get_object_or_404
 
-from project.forms import ProjectForm, TaskForm, ChangeProjectForm
+from project.forms import ProjectForm, TaskForm, ChangeProjectForm, ChangeTaskForm
 from project.models import Projects, Tasks, TaskLists
 from users.models import Workers, Responsible
 
@@ -16,16 +16,6 @@ def index(request):
     :return: basic.html
     '''
     return render(request, 'project/basic.html')
-def show_project(request):
-    '''
-    Метод отображения проектов
-    :param request:
-    :return: project.html
-    '''
-    users = Workers.objects.all()
-    projects = Projects.objects.all()
-    context = {'users': users, 'projects': projects}
-    return render(request, 'project/project.html', context)
 def show_all_managers(request):
     '''
     Метод отображения менеджеров для администраторов
@@ -60,7 +50,7 @@ def create_project(request):
 
 def sort_projects(request):
     '''
-    Сортировка проектов по критериям пользователя (администратора)
+    Отображение и Сортировка проектов по критериям пользователя (администратора)
     :param request:
     :return:
     '''
@@ -85,8 +75,6 @@ def sort_projects(request):
         request,
         'project/project.html',context
     )
-
-    pass
 
 def change_project(request, project_id):
     '''
@@ -124,27 +112,71 @@ def create_task(request):
     context = {'start_task_form': form}
     return render(request, 'project/create_tasks.html', context)
 
+def change_task(request, task_id):
+    '''
+    Отображает форму для изменения задачи для менеджера
+    :param request:
+    :param task_id:
+    :return:
+    '''
+    task = get_object_or_404(Tasks, pk=task_id)
+    task_list = get_object_or_404(TaskLists, pk=task_id)
+    if request.method == 'POST':
+        form = ChangeTaskForm(data=request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('show_tasks_list', args=[task_list]))
+    else:
+        form = ChangeTaskForm(instance=task)
+    context = {
+        'change_task_form': form,
+               }
+    return render(request, 'project/change_task.html', context)
 def show_projects_for_managers(request, manager_id : int):
     '''
-    Отображает проекты для конкретного менеджера
+    Отображает и сортирует проекты для конкретного менеджера
     :param request:
     :param manager_id: int
     :return: show_projects_for_managers.html
     '''
-    projects = Projects.objects.filter(responsible=manager_id)
-    context = {'projects': projects}
+    sort_by = request.GET.get('sort_by', 'project_name')
+    ALLOWED_SORT_FIELDS = {
+        'project_name': 'Название',
+        'status': 'Статус',
+        'plan_start_date': 'Дата начала проекта',
+        'plan_finish_date': 'Дата окончания проекта',
+        'type': 'Тип проекта',
+    }
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'project_name'
+    projects = Projects.objects.filter(responsible=manager_id).order_by(sort_by)
+    context = {'projects': projects,
+               'sort_by': sort_by,
+               'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_projects_for_managers.html', context)
 
 
 def show_tasks_for_managers(request, task_list):
     '''
-    Отображение задач по проекту для менеджеров
+    Отображает и сортирует задачи по проекту для менеджеров
     :param request:
     :param task_list:
     :return: show_projects_for_managers.html
     '''
+    sort_by = request.GET.get('sort_by', 'description')
+    ALLOWED_SORT_FIELDS = {
+        'description': 'Описание',
+        'start_date': 'Дата начала',
+        'plan_finish_date': 'Дата окончания',
+        'status':'Статус',
+        'priority':'Приоритет',
+    }
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'description'
     list_id = get_object_or_404(TaskLists, list_name=task_list)
-    tasks = Tasks.objects.filter(list=list_id)
-    context = {'tasks': tasks}
+    tasks = Tasks.objects.filter(list=list_id).order_by(sort_by)
+    context = {'tasks': tasks,
+               'sort_by': sort_by,
+               'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_tasks.html', context)
 

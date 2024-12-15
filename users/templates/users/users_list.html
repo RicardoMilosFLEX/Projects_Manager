@@ -2,6 +2,16 @@
 {% block content %}
     <div class="workers">
         <div class="worker">
+        <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+    <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
             {% for worker in workers %}
                 <h2>ID-{{ worker.worker_id }}</h2>
                 <h2>ФИО:
