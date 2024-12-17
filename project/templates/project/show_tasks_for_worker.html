@@ -1,0 +1,29 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+    <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+        <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+        </select>
+    </form>
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="task">
+                <h2>Описание задачи: {{ task.description }}</h2>
+                <p>Дата начала задачи: {{ task.start_date }}</p>
+                <p>Планируемая дата завершения задачи: {{ task.plan_finish_date }}</p>
+                <p>Приоритет: {{ task.priority }}</p>
+                <p>Статус: {{ task.status }}</p>
+            </div>
+        {% endfor %}
+        {% else %}
+        <h2>Для вас нет задач</h2>
+    {% endif %}
+    </div>
+
+{% endblock %}

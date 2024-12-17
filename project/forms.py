@@ -40,7 +40,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Tasks
         fields = ('description','start_date',
-                  'plan_finish_date','list','status','priority')
+                  'plan_finish_date','list','status','priority', 'responsible_worker',)
         labels = {
             'description':'Описание',
             'start_date':'Дата начала задачи',
@@ -48,6 +48,7 @@ class TaskForm(forms.ModelForm):
             'list':'Список задач',
             'status':'Статус',
             'priority':'Приоритет',
+            'responsible_worker': 'Ответственный',
         }
 
 class ChangeProjectForm(forms.ModelForm):

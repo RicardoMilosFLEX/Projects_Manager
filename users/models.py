@@ -86,7 +86,7 @@ class Workers(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name','last_name','phone','position','password',]
     def __str__(self):
-          return self.email
+          return f'{self.first_name} {self.last_name}'
 
     class Meta:
         db_table = 'workers'

@@ -34,8 +34,8 @@
                             Посмотреть ваши проекты
                         </a>
                     {% else %}
-                        <a href="">Посмотреть ваш проект</a>
-                        <a href="">Посмотреть ваши задачи</a>
+                        <a href="{% url 'show_worker_project' user.worker_id %}" >Посмотреть ваши проекты</a>
+                        <a href="{% url 'show_tasks_for_workers' user.worker_id  %}">Посмотреть ваши задачи</a>
                     {% endif %}
                 {% else %}
                     <div class="login_button">

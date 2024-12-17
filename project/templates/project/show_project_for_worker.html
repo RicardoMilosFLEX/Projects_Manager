@@ -1,0 +1,27 @@
+{% extends 'project/basic.html' %}
+{% block content %}
+    <div>
+    <form method="get" id="sortForm">
+    <label for="sortSelect">Сортировать по:</label>
+        <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+        {% for field, display_name in sort_fields.items %}
+            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                {{ display_name }}
+            </option>
+        {% endfor %}
+        </select>
+    </form>
+        {% if projects %}
+            {% for project in projects %}
+                <h2>Название проекта: {{ project.project_name }}</h2>
+                <p>Описание: {{ project.description }}</p>
+                <p>Статус: {{ project.status }}</p>
+                <p>Тип проекта: {{ project.type }}</p>
+                <p>Ответственный за проект: {{ project.responsible.surname }} {{ project.responsible.name }}</p>
+                <p>Планируемая дата сдачи проекта: {{ project.plan_finish_date }}</p>
+            {% endfor %}
+            {% else %}
+            <h2>Вы не работаете над проектами</h2>
+        {% endif %}
+    </div>
+{% endblock %}

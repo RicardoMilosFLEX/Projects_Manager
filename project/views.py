@@ -1,3 +1,5 @@
+
+
 from django.db.models.fields import return_None
 from django.urls import reverse
 
@@ -181,6 +183,45 @@ def show_tasks_for_managers(request, task_list):
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_tasks.html', context)
 
+def show_and_sort_tasks_for_workers(request, worker_id):
+    sort_by = request.GET.get('sort_by', 'priority')
+    ALLOWED_SORT_FIELDS = {
+        'description': 'Описание',
+        'plan_finish_date': 'Дата окончания',
+        'status': 'Статус',
+        'priority': 'Приоритет',
+    }
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'priority'
+    tasks = Tasks.objects.filter(responsible_worker=worker_id).order_by(sort_by)
+    context = {'tasks': tasks,
+               'sort_by': sort_by,
+               'sort_fields': ALLOWED_SORT_FIELDS,}
+    return render(request, 'project/show_tasks_for_worker.html', context)
+def show_project_for_worker(request, worker_id):
+    '''
+    Отображение проекта над которым работает разработчик
+    :param request:
+    :param worker_id:
+    :return: show_project_for_worker.html
+    '''
+    sort_by = request.GET.get('sort_by', 'project_name')
+    ALLOWED_SORT_FIELDS = {
+        'project_name': 'Название',
+        'status': 'Статус',
+        'plan_finish_date': 'Дата окончания проекта',
+        'type': 'Тип проекта',
+    }
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'project_name'
+    tasks = Tasks.objects.filter(responsible_worker_id=worker_id)
+    tasks_lists = [tasks.list for tasks in tasks]
+    projects = Projects.objects.filter(tasks_list__in=tasks_lists)
+    context = {'projects': projects,
+               'sort_by': sort_by,
+               'sort_fields': ALLOWED_SORT_FIELDS,}
+    return render(request, 'project/show_project_for_worker.html', context)
+
 def delete_project(request, project_id):
     '''
     Удаление проектов
@@ -206,3 +247,5 @@ def delete_task(request, task_id):
         task.delete()
         messages.success(request,'Задача успешно удалена.')
     return HttpResponseRedirect(reverse('index'))
+
+
