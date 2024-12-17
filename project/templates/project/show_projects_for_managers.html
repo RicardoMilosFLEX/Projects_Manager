@@ -1,6 +1,7 @@
 {% extends 'project/basic.html' %}
 {% block content %}
     <div>
+        <a href="{% url 'index' %}">На главную</a>
     <form method="get" id="sortForm">
     <label for="sortSelect">Сортировать по:</label>
         <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">

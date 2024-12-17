@@ -51,8 +51,7 @@ class ChangeUser(forms.ModelForm):
     class Meta:
         model = Workers
         fields = ('last_name', 'first_name',
-                  'father_name', 'email',
-                  'group_name','phone','work_phone',
+                  'father_name', 'email','phone','work_phone',
                   'position',
                   )
         labels = {
@@ -60,7 +59,6 @@ class ChangeUser(forms.ModelForm):
             'first_name': 'Имя',
             'father_name': 'Отчество',
             'email': "Почта",
-            'group_name': 'Группа сотрудника',
             'phone': 'Телефон',
             'work_phone': 'Рабочий телефон',
             'position': 'Должность',

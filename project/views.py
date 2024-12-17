@@ -1,7 +1,8 @@
+from django.db.models.fields import return_None
 from django.urls import reverse
 
 from django.http import HttpResponseRedirect
-
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
 
 from project.forms import ProjectForm, TaskForm, ChangeProjectForm, ChangeTaskForm
@@ -180,3 +181,28 @@ def show_tasks_for_managers(request, task_list):
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_tasks.html', context)
 
+def delete_project(request, project_id):
+    '''
+    Удаление проектов
+    :param request:
+    :param project_id:
+    :return:
+    '''
+    project = get_object_or_404(Projects, pk=project_id)
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, "Проект успешно удалён.")
+    return HttpResponseRedirect(reverse('projects'))
+
+def delete_task(request, task_id):
+    '''
+    Удаление задач
+    :param request:
+    :param task_id:
+    :return:
+    '''
+    task = get_object_or_404(Tasks, pk=task_id)
+    if request.method == 'POST':
+        task.delete()
+        messages.success(request,'Задача успешно удалена.')
+    return HttpResponseRedirect(reverse('index'))

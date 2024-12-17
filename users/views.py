@@ -82,7 +82,7 @@ def show_delete_user(request, worker_id):
 
 def delete_user(request , worker_id):
     '''Удаление пользователя'''
-    worker = get_object_or_404(Workers, pk=worker_id)
+    worker = Workers.objects.get(pk=worker_id)
     worker.delete()
     return HttpResponseRedirect(reverse('show_users'))
 

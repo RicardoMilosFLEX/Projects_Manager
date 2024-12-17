@@ -25,6 +25,10 @@
                         <p>Дата начала проекта: {{ project.plan_start_date }}</p>
                         <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
                         <h3><a href="{% url 'change_project' project.project_id %}">Редактировать</a></h3>
+                        <form method="post" action="{% url 'delete_project' project.project_id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить проект</button>
+                        </form>
                 </div>
             {% endfor %}
         {% else %}

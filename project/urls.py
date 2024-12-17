@@ -11,4 +11,6 @@ urlpatterns = [
     path('change_task/<int:task_id>', change_task, name='change_task'),
     path('show_project/<int:manager_id>', show_projects_for_managers, name='check_projects_for_manager'),
     path('show_project/tasks_list/<str:task_list>', show_tasks_for_managers, name='show_tasks_list'),
+    path('delete_project/<int:project_id>', delete_project, name='delete_project'),
+    path('delete_task/<int:task_id>', delete_task, name='delete_task'),
 ]
