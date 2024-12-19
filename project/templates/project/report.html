@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет по задачам</title>
+</head>
+<body>
+    <h1>Tasks Report</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Task_List</th>
+                
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.description }}</td>
+                <td>{{ task.list }}</td>
+
+                <td>{{ task.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -33,9 +33,11 @@
                         <a href="{% url 'check_projects_for_manager' user.worker_id %}">
                             Посмотреть ваши проекты
                         </a>
+                        <a href="{% url 'generate_pdf' %}">Сгенерировать отчет по задачам</a>
                     {% else %}
                         <a href="{% url 'show_worker_project' user.worker_id %}" >Посмотреть ваши проекты</a>
                         <a href="{% url 'show_tasks_for_workers' user.worker_id  %}">Посмотреть ваши задачи</a>
+{#                        <a href="{% url 'show_calendar' user.worker_id %}">Посмотреть календарь задач</a>#}
                     {% endif %}
                 {% else %}
                     <div class="login_button">

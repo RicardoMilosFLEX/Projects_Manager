@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь задач сотрудника</title>
+
+    <!-- Подключаем стили для FullCalendar -->
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet">
+
+    <!-- Подключаем библиотеку FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction/main.js"></script>
+
+    <!-- Подключаем jQuery (если не использовался в проекте) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Календарь задач сотрудника</h1>
+
+    <div id="calendar">
+
+    <script>
+        $(document).ready(function() {
+            // Инициализация календаря
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: JSON.parse('{{ events_json|escapejs }}'),  // Загружаем задачи как события
+                editable: false,  // Можно редактировать события
+                droppable: false  // Перетаскивание событий (опционально)
+            });
+        });
+    </script>
+
+    </div>
+
+</body>
+</html>

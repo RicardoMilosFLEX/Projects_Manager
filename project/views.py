@@ -1,6 +1,5 @@
 
-
-from django.db.models.fields import return_None
+import json
 from django.urls import reverse
 
 from django.http import HttpResponseRedirect
@@ -10,7 +9,10 @@ from django.shortcuts import render, get_object_or_404
 from project.forms import ProjectForm, TaskForm, ChangeProjectForm, ChangeTaskForm
 from project.models import Projects, Tasks, TaskLists
 from users.models import Workers, Responsible
-
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from .models import Tasks
 
 def index(request):
     '''
@@ -248,4 +250,48 @@ def delete_task(request, task_id):
         messages.success(request,'Задача успешно удалена.')
     return HttpResponseRedirect(reverse('index'))
 
+def show_calendar(request, worker_id):
+    # Пока не работает
+    '''
+    Отображает календар с датами для разработчиков
+    :param request:
+    :param worker_id:
+    :return:
+    '''
+    tasks = Tasks.objects.filter(responsible_worker_id=worker_id)
+    events = []
+    for task in tasks:
+        event = {
+            'title': task.description,
+            'end': task.plan_finish_date.strftime('%Y-%m-%d'),
+            'status': task.status.status_name,
+            'priority': task.priority.priority_name,
+        }
+        events.append(event)
 
+    events_json = json.dumps(events)
+    context = {'events': events_json}
+    return render(request, 'project/calendar_page.html', context)
+
+
+
+
+def generate_pdf(request):
+
+    tasks = Tasks.objects.all()
+
+    # Рендерим HTML-шаблон
+    template = get_template('project/report.html')
+    html = template.render({'tasks': tasks})
+
+    # Генерируем PDF
+    font_path = 'project/static/img/DejaVuSans.ttf'
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="report.pdf"'
+
+    pisa_status = pisa.CreatePDF(html, dest=response, font_path=font_path)
+
+    if pisa_status.err:
+        return HttpResponse('Ошибка при генерации PDF', status=500)
+
+    return response
