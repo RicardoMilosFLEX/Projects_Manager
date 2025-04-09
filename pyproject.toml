@@ -1,0 +1,16 @@
+[project]
+name = "projects-manager"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.2",
+    "django-phonenumber-field>=8.0.0",
+    "djangorestframework>=3.16.0",
+    "phonenumbers>=9.0.2",
+    "pip>=25.0.1",
+    "psycopg2>=2.9.10",
+    "wheel>=0.46.1",
+    "xhtml2pdf>=0.2.17",
+]
