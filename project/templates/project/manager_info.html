@@ -1,33 +1,41 @@
 {% extends 'project/basic.html' %}
+{% load static %}
 {% block content %}
-    <div>
-    <a href="{% url 'index' %}">На главную</a>
-    {% if managers %}
-        {% for manager in managers %}
-            <div class="managers">
-                <div class="manager">
-                    <h2>ФИО: {{ manager.surname }} {{ manager.name }}</h2>
-                    <h2>Почта: {{ manager.email }}</h2>
-                    <h2>Проекты менеджера:</h2>
-                    {% if projects %}
-                        {% for project in projects %}
-                            {% if project.responsible == manager %}
-                              <div class="">
-                                  <h2>Название: {{ project.project_name }}</h2>
-                                  <p>Описание: {{ project.description }}</p>
-                                  <p>Клиент: {{ project.client }}</p>
-                                  <p>Статус: {{ project.status }}</p>
-                              </div>
+<link rel="stylesheet" href="{% static 'css/manager_info.css'%}">
+    <div class="container">
+        <a href="{% url 'index' %}" class="back-link">На главную</a>
+        {% if managers %}
+            <div class="managers-grid">
+                {% for manager in managers %}
+                    <div class="manager-card">
+                        <div class="manager-info">
+                            <h2>ФИО: {{ manager.surname }} {{ manager.name }} {{manager.father_name}}</h2>
+                            <h3>Почта: {{ manager.email }}</h3>
+                            <h3>Проекты менеджера:</h3>
+                            {% if projects %}
+                                <div class="projects-list">
+                                    {% for project in projects %}
+                                        {% if project.responsible == manager %}
+                                            <div class="project-card">
+                                                <h3>{{ project.project_name }}</h3>
+                                                <div class="project-details">
+                                                    <p><strong>Описание:</strong> {{ project.description }}</p>
+                                                    <p><strong>Клиент:</strong> {{ project.client }}</p>
+                                                    <p><strong>Статус:</strong> <span class="status-badge">{{ project.status }}</span></p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="no-projects">Проектов пока нет</p>
                             {% endif %}
-                        {% endfor %}
-                        {% else %}
-                        <h2>Проектов пока нет</h2>
-                    {% endif %}
-                </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    {% else %}
-            <h2>Здесь пока пусто</h2>
-    {% endif %}
+        {% else %}
+            <p class="no-data">Здесь пока пусто</p>
+        {% endif %}
     </div>
 {% endblock %}

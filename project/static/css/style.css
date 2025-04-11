@@ -34,14 +34,135 @@ body {
 	background-color: #f9fafc;
 	color: #172b4d;
 }
-.create_project{
+.create_project {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     max-width: 600px;
-    margin: 0 auto;
+    margin: 40px auto;
 }
-.form{
 
+.create_project .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.create_project .form p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.create_project .form label {
+    color: #464b4a;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.create_project .form input,
+.create_project .form select,
+.create_project .form textarea {
+    padding: 10px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+
+.create_project .form textarea {
+    resize: none;
+    min-height: 100px;
+    height: auto;
+    overflow: hidden;
+}
+
+.create_project .form input:focus,
+.create_project .form select:focus,
+.create_project .form textarea:focus {
+    outline: none;
+    border-color: cornflowerblue;
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.2);
+}
+
+.create_project .form button {
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+.create_project .form button:hover {
+    background-color: #4a7edd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.project {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e1e4e8;
+}
+
+.project:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project h1 {
+    color: #464b4a;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid cornflowerblue;
+    padding-bottom: 10px;
+}
+
+.project p {
+    margin: 8px 0;
+    color: #172b4d;
+    line-height: 1.4;
+}
+
+.project h3 a {
+    color: cornflowerblue;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.project h3 a:hover {
+    text-decoration: underline;
+}
+
+.project .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.project .btn-danger:hover {
+    background-color: #c82333;
 }

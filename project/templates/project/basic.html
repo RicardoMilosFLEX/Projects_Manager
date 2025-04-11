@@ -13,8 +13,7 @@
     <div class="topic">
         <div class="greeting-nav">
             <h1 class="greeting">
-                ProjectSea
-            </h1>
+                ProjectSea</h1>
             <div class="auth-links">
                 {% if user.is_authenticated %}
                     <h3>Пользователь: {{ user.first_name }} {{ user.last_name }} - {{ user.position }}</h3>
@@ -49,7 +48,9 @@
         </div>
     </div>
 </header>
+<div>
     {% block content %}
     {% endblock %}
+</div>
 </body>
 </html>

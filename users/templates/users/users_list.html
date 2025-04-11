@@ -1,18 +1,22 @@
 {% extends 'project/basic.html' %}
 {% block content %}
-    <div class="workers">
-        <div class="worker">
-        <form method="get" id="sortForm">
-    <label for="sortSelect">Сортировать по:</label>
-    <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
-        {% for field, display_name in sort_fields.items %}
-            <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
-                {{ display_name }}
-            </option>
-        {% endfor %}
-    </select>
-</form>
-            {% for worker in workers %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/users_list.css' %}">
+<div class="sort">
+    <form method="get" id="sortForm">
+            <label for="sortSelect">Сортировать по:</label>
+            <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+                {% for field, display_name in sort_fields.items %}
+                    <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                        {{ display_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>    
+</div>
+<div class="workers">
+        {% for worker in workers %}
+            <div class="worker">
                 <h2>ID-{{ worker.worker_id }}</h2>
                 <h2>ФИО:
                     {{ worker.last_name }}
@@ -42,7 +46,7 @@
                     <a href="{% url 'change_user' worker.worker_id%}">Изменить пользователя</a> |
 {#                    <a href="{% url 'show_delete_user' worker.worker_id%}">Удалить пользователя</a>#}
                 </p>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
