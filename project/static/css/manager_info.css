@@ -1,0 +1,90 @@
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .back-link {
+                display: inline-block;
+                margin-bottom: 20px;
+                color: #1a73e8;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+
+            .managers-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .manager-card {
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+
+            .manager-info h2 {
+                color: #1a73e8;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .manager-info h3 {
+                color: #5f6368;
+                font-size: 1.2rem;
+                margin: 10px 0;
+            }
+
+            .projects-list {
+                margin-top: 15px;
+            }
+
+            .project-card {
+                background: #f8f9fa;
+                border-radius: 6px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .project-card h3 {
+                color: #202124;
+                margin-bottom: 10px;
+            }
+
+            .project-details p {
+                margin: 8px 0;
+                color: #5f6368;
+            }
+
+            .status-badge {
+                background: #e8f0fe;
+                color: #1a73e8;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 0.9rem;
+            }
+
+            .no-projects, .no-data {
+                color: #5f6368;
+                text-align: center;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 8px;
+            }
+
+            @media (max-width: 768px) {
+                .managers-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .container {
+                    padding: 10px;
+                }
+            }

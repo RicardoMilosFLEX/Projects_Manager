@@ -17,7 +17,7 @@
         {% if projects %}
             {% for project in projects %}
                 <div class="project">
-                        <h1>Название: {{ project.project_name}}</h1>
+                        <h1>{{ project.project_name}}</h1>
                         <p>Описание: {{ project.description }}</p>
                         <p>Статус: {{ project.status }}</p>
                         <p>Ответственный: {{ project.responsible.name }} {{ project.responsible.surname }}</p>
