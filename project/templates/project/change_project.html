@@ -1,5 +1,8 @@
 {% extends 'project/basic.html' %}
 {% block content %}
+    <div class="title">
+        <h1>Редактирование проекта: {{ change_project_form.instance.project_name}}</h1>
+    </div>
     <div class="create_project">
         <form method="post" class="form">
             {% csrf_token %}

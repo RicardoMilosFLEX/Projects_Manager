@@ -1,26 +1,50 @@
 .topic {
     background-color: cornflowerblue;
     padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .greeting-nav {
-    display: block;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .greeting {
     margin: 0;
-    font-size: 1.5em;
-    color: #464b4a;
-    text-align: center;
+    font-size: 2em;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.auth-links h3 {
+    color: white;
+    margin: 0;
+    font-size: 1em;
 }
 
 .auth-links a {
-    margin-left: 10px;
+    color: white;
     text-decoration: none;
-    text-align: end;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.auth-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .auth-links .btn {
@@ -34,13 +58,25 @@ body {
 	background-color: #f9fafc;
 	color: #172b4d;
 }
+.title {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.title h1 {
+    color: #172b4d;
+    font-size: 2em;
+    font-weight: 600;
+    margin: 0;
+}
+
 .create_project {
     background-color: white;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     max-width: 600px;
-    margin: 40px auto;
+    margin: 20px auto
 }
 
 .create_project .form {

@@ -1,11 +1,9 @@
 
 import json
 from django.urls import reverse
-
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404
-
 from project.forms import ProjectForm, TaskForm, ChangeProjectForm, ChangeTaskForm
 from project.models import Projects, Tasks, TaskLists
 from users.models import Workers, Responsible
@@ -13,6 +11,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .models import Tasks
+from .decorators import admin_required
 
 def index(request):
     '''
@@ -43,6 +42,7 @@ def index(request):
         elif request.user.position_id == 2:  # Менеджер
             return HttpResponseRedirect(reverse('check_projects_for_manager', args=[request.user.worker_id]))
     return render(request, 'project/basic.html')
+@admin_required
 def show_all_managers(request):
     '''
     Метод отображения менеджеров для администраторов
@@ -56,6 +56,7 @@ def show_all_managers(request):
         'projects': projects,
     }
     return render(request, 'project/manager_info.html', context)
+@admin_required
 def create_project(request):
     '''
     Метод возвращает страницу по созданию проекта (для администраторов)
@@ -75,6 +76,7 @@ def create_project(request):
     context = {'start_project_form': form}
     return render(request, 'project/create_project.html', context)
 
+@admin_required
 def sort_projects(request):
     '''
     Отображение и Сортировка проектов по критериям пользователя (администратора)
@@ -103,6 +105,7 @@ def sort_projects(request):
         'project/project.html',context
     )
 
+@admin_required
 def change_project(request, project_id):
     '''
     Метод возвращает страницу для изменения проетка для администратора
