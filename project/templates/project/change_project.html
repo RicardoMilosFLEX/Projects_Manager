@@ -1,7 +1,7 @@
 {% extends 'project/basic.html' %}
 {% block content %}
-    <div>
-        <form method="post">
+    <div class="create_project">
+        <form method="post" class="form">
             {% csrf_token %}
             {{ change_project_form.as_p }}
             <button type="submit">Изменить</button>

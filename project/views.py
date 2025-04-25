@@ -16,10 +16,32 @@ from .models import Tasks
 
 def index(request):
     '''
-    Метод возвращает отображение главной страницы
+    Метод возвращает отображение главной страницы в зависимости от роли пользователя
     :param request:
-    :return: basic.html
+    :return: соответствующий шаблон
     '''
+    if request.user.is_authenticated:
+        if request.user.position_id == 1:  # Администратор
+            sort_by = request.GET.get('sort_by', 'project_name')
+            ALLOWED_SORT_FIELDS = {
+                'project_name': 'Название проекта',
+                'status':'Статус',
+                'plan_start_date': 'Дата начала',
+                'plan_finish_date': 'Дата окончания',
+            }
+            if sort_by not in ALLOWED_SORT_FIELDS:
+                sort_by = 'project_name'
+            projects = Projects.objects.all().order_by(sort_by)
+            users = Workers.objects.all()
+            context = {
+                'projects': projects,
+                'sort_by': sort_by,
+                'users': users,
+                'sort_fields': ALLOWED_SORT_FIELDS,
+            }
+            return render(request, 'project/project.html', context)
+        elif request.user.position_id == 2:  # Менеджер
+            return HttpResponseRedirect(reverse('check_projects_for_manager', args=[request.user.worker_id]))
     return render(request, 'project/basic.html')
 def show_all_managers(request):
     '''

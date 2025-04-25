@@ -21,7 +21,8 @@
                         <p>Описание: {{ project.description }}</p>
                         <p>Статус: {{ project.status }}</p>
                         <p>Ответственный: {{ project.responsible.name }} {{ project.responsible.surname }}</p>
-                        <p>Клиент: {{ project.client.name}} {{ project.client.surname }}, Почта - {{ project.client.email }}</p>
+                        <p>Клиент: {{ project.client.name}} {{ project.client.surname }}</p>
+                        <p>Почта - {{ project.client.email }}</p>
                         <p>Дата начала проекта: {{ project.plan_start_date }}</p>
                         <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
                         <h3><a href="{% url 'change_project' project.project_id %}">Редактировать</a></h3>
