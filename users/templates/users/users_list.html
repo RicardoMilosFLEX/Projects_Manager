@@ -42,10 +42,6 @@
                         <p>Не состоит в группе</p>
                     {% endif %}
                 </p>
-                <p>
-                    <a href="{% url 'change_user' worker.worker_id%}">Изменить пользователя</a> |
-{#                    <a href="{% url 'show_delete_user' worker.worker_id%}">Удалить пользователя</a>#}
-                </p>
             </div>
         {% endfor %}
     </div>

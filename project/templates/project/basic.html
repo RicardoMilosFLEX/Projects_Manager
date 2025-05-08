@@ -19,6 +19,7 @@
                     <h3>Пользователь: {{ user.first_name }} {{ user.last_name }} - {{ user.position }}</h3>
 
                     <a href="{% url 'logout' %}">Выйти</a>
+                    <a href="{% url 'change_user' user.worker_id %}">Редактировать профиль</a>
                     {% if user.position_id == 1 %}
                         <a href="{% url 'create_project' %}">Создать новый проект</a>
                         <a href="{% url 'projects' %}">Посмотреть проекты</a>
