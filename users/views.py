@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth import login
 
-from users.forms import EmailAuthenticationForm, CustomUserCreationForm, ChangeUser
+from users.forms import EmailAuthenticationForm, CustomUserCreationForm, ChangeUser, ChangeUserPositionForm
 from users.models import Workers
 
 import logging
@@ -68,13 +68,12 @@ def change_user(request, worker_id)-> render:
         if form.is_valid():
             form.save()
             logger.info(f"Изменения сохранены")
-            
-            # Перенаправление в зависимости от роли пользователя
-            if worker.position_id == 1:  # Администратор
+        
+            if worker.position_id == 1: 
                 return HttpResponseRedirect(reverse('projects'))
-            elif worker.position_id == 2:  # Менеджер
+            elif worker.position_id == 2:  
                 return HttpResponseRedirect(reverse('check_projects_for_manager', args=[worker.worker_id]))
-            else:  # Работник
+            else:  
                 return HttpResponseRedirect(reverse('show_tasks_for_workers', args=[worker.worker_id]))
     else:
         form = ChangeUser(instance=worker)
@@ -82,8 +81,25 @@ def change_user(request, worker_id)-> render:
     return render(request, 'users/change_user.html', context)
 
 def change_user_position(request, worker_id) -> render:
-    pass
+    """Метод для изменения должности пользователя.
 
+    Args:
+        request (HTTPRequest): Запрос
+        worker_id (int): ID пользователя
+
+    Returns:
+        render: Страница с формой изменения должности
+    """
+    worker = get_object_or_404(Workers, pk=worker_id)
+    if request.method == 'POST':
+        form = ChangeUserPositionForm(request.POST, instance=worker)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('show_users'))
+    else:
+        form = ChangeUserPositionForm(instance=worker)
+    context = {'user': worker, 'change_user_position_form': form}
+    return render(request, 'users/change_user_position.html', context)
 def show_delete_user(request, worker_id):
     '''Отобрадение пользователя для удаления'''
     worker = Workers.objects.get(pk=worker_id)

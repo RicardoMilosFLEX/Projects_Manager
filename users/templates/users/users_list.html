@@ -43,6 +43,12 @@
                     {% endif %}
                 </p>
             </div>
+            <div>
+                <p>
+                    <a href="{% url 'change_user_position' worker.worker_id %}">Поменять должность</a>
+                    <a href="{% url 'delete_user' worker.worker_id %}">Удалить</a>
+                </p>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}

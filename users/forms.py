@@ -68,7 +68,7 @@ class ChangeUserPositionForm(forms.ModelForm):
         model = Workers
         fields = ('position',)
         labels = {
-            'position':'Должность'
+            'position' : 'Должность'
         }
 
 
