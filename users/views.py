@@ -5,11 +5,12 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth import login
 
-from users.forms import EmailAuthenticationForm, CustomUserCreationForm, ChangeUser
+from users.forms import EmailAuthenticationForm, CustomUserCreationForm, ChangeUser, ChangeUserPositionForm
 from users.models import Workers
 
 import logging
-def login(request):
+
+def login(request) -> render:
     '''Авторизация пользователя'''
     if request.method == 'POST':
         form = EmailAuthenticationForm(data=request.POST)
@@ -51,11 +52,13 @@ def show_and_sort_users(request):
     return render(request, 'users/users_list.html', context)
 
 
-# ЭТОТ КОД НУЖНО ИСПРАВИТЬ. РАБОТАЕТ НЕ СОВСЕМ КОРРЕКТНО
+#TODO ЭТОТ КОД НУЖНО ИСПРАВИТЬ. РАБОТАЕТ НЕ СОВСЕМ КОРРЕКТНО
 logging.basicConfig(level=logging.INFO, filename="views.py",filemode="w")
 logger = logging.getLogger(__name__)
-# ЛОГИ УБРАТЬ в другой файл ПОТОМ
-def change_user(request, worker_id):
+#TODO ЛОГИ УБРАТЬ в другой файл ПОТОМ
+
+
+def change_user(request, worker_id)-> render:
     '''Редактирование пользователя'''
     logger.info(f"Текущий пользователь: {worker_id}")
     worker = get_object_or_404(Workers, pk=worker_id)
@@ -64,15 +67,39 @@ def change_user(request, worker_id):
         form = ChangeUser(request.POST, instance=worker)
         if form.is_valid():
             form.save()
-            logger.info(f"Изменения сохранены администратором:")
-            return HttpResponseRedirect(reverse('show_users'))
+            logger.info(f"Изменения сохранены")
+        
+            if worker.position_id == 1: 
+                return HttpResponseRedirect(reverse('projects'))
+            elif worker.position_id == 2:  
+                return HttpResponseRedirect(reverse('check_projects_for_manager', args=[worker.worker_id]))
+            else:  
+                return HttpResponseRedirect(reverse('show_tasks_for_workers', args=[worker.worker_id]))
     else:
         form = ChangeUser(instance=worker)
     context = {'user': worker, 'change_user_form': form}
     return render(request, 'users/change_user.html', context)
 
+def change_user_position(request, worker_id) -> render:
+    """Метод для изменения должности пользователя.
 
+    Args:
+        request (HTTPRequest): Запрос
+        worker_id (int): ID пользователя
 
+    Returns:
+        render: Страница с формой изменения должности
+    """
+    worker = get_object_or_404(Workers, pk=worker_id)
+    if request.method == 'POST':
+        form = ChangeUserPositionForm(request.POST, instance=worker)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('show_users'))
+    else:
+        form = ChangeUserPositionForm(instance=worker)
+    context = {'user': worker, 'change_user_position_form': form}
+    return render(request, 'users/change_user_position.html', context)
 def show_delete_user(request, worker_id):
     '''Отобрадение пользователя для удаления'''
     worker = Workers.objects.get(pk=worker_id)

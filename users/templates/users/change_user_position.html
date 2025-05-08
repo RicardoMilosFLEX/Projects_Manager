@@ -1,12 +1,12 @@
 {% extends 'project/basic.html' %}
 {% block content %}
     <div class="title">
-        <h1>Редактирование сотрудника</h1>
+        <h1>Смена должности</h1>
     </div>
     <div class="create_project">
         <form method="post" class="form">
             {% csrf_token %}
-            {{ change_user_form.as_p }}
+            {{ change_user_position_form.as_p }}
             <button type="submit">Изменить</button>
         </form>
     </div>
