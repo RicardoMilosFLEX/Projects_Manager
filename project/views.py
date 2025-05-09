@@ -251,6 +251,16 @@ def show_project_for_worker(request, worker_id):
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_project_for_worker.html', context)
 
+def show_delete_project(request, project_id):
+    '''
+    Метод возвращает страницу для удаления проекта
+    :param request:
+    :return: delete_project.html
+    '''
+    project = get_object_or_404(Projects, pk=project_id)
+    context = {'project': project}
+    return render(request, 'project/delete_project.html', context)
+
 def delete_project(request, project_id):
     '''
     Удаление проектов
