@@ -1,7 +1,7 @@
 {% extends 'project/basic.html' %}
 {% block content %}
-    <div class="">
-        <form method="post" class="create_task">
+    <div class="create_project">
+        <form method="post" class="form">
             {% csrf_token %}
             {{ start_task_form.as_p }}
             <button type="submit">Добавить</button>

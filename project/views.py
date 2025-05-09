@@ -41,6 +41,8 @@ def index(request):
             return render(request, 'project/project.html', context)
         elif request.user.position_id == 2:  # Менеджер
             return HttpResponseRedirect(reverse('check_projects_for_manager', args=[request.user.worker_id]))
+        else:  # Рабочий
+            return HttpResponseRedirect(reverse('show_tasks_for_workers', args=[request.user.worker_id]))
     return render(request, 'project/basic.html')
 @admin_required
 def show_all_managers(request):

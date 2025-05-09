@@ -100,6 +100,7 @@ def change_user_position(request, worker_id) -> render:
         form = ChangeUserPositionForm(instance=worker)
     context = {'user': worker, 'change_user_position_form': form}
     return render(request, 'users/change_user_position.html', context)
+
 def show_delete_user(request, worker_id):
     '''Отобрадение пользователя для удаления'''
     worker = Workers.objects.get(pk=worker_id)
@@ -107,9 +108,9 @@ def show_delete_user(request, worker_id):
     return render(request, 'users/delete_user.html', context)
 
 
-def delete_user(request , worker_id):
+def delete_user(request, worker_id):
     '''Удаление пользователя'''
-    worker = Workers.objects.get(pk=worker_id)
+    worker = get_object_or_404(Workers, pk=worker_id)
     worker.delete()
     return HttpResponseRedirect(reverse('show_users'))
 
