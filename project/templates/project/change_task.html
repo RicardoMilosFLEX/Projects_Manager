@@ -1,12 +1,22 @@
 {% extends 'project/basic.html' %}
+{% load static %}
 {% block content %}
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            {{ change_task_form.as_p }}
-            <button type="submit">
-                Изменить
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<div class="title">
+    <h2>Редактирование задачи</h2>
+</div>
+<div class="create_project">
+    <form method="post" class='form'>
+        {% csrf_token %}
+        {{ change_task_form.as_p }}
+        <div class="button-group">
+            <button type="submit" class="save-button">
+                Сохранить изменения
             </button>
-        </form>
-    </div>
+            <button type="button" onclick="history.back()" class="cancel-button">
+                Отмена
+            </button>
+        </div>
+    </form>
+</div>
 {% endblock %}
