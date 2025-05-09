@@ -15,6 +15,7 @@ urlpatterns = [
     path('show_worker_project/<int:worker_id>', show_project_for_worker, name='show_worker_project'),
     path('show_delete_project/<int:project_id>', show_delete_project, name='show_delete_project'),
     path('delete_project/<int:project_id>', delete_project, name='delete_project'),
+    path('show_delete_task/<int:task_id>', show_delete_task, name='show_delete_task'),  # New pat
     path('delete_task/<int:task_id>', delete_task, name='delete_task'),
     path('calendar/<int:worker_id>', show_calendar, name='show_calendar'),
     path('generate-report/', generate_pdf, name='generate_pdf'),

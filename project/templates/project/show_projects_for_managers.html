@@ -1,38 +1,39 @@
 {% extends 'project/basic.html' %}
+{% load static %}
 {% block content %}
-    <div>
-        <a href="{% url 'index' %}">На главную</a>
-        <form method="get" id="sortForm">
-            <label for="sortSelect">Сортировать по:</label>
-            <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
-                {% for field, display_name in sort_fields.items %}
-                    <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
-                        {{ display_name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </form>
-        <h2>Список проектов:</h2>
-        <div class="projects">
-            {% if projects %}
-                {% for project in projects %}
-                    <div class="project">
-                        <h1>{{ project.project_name }}</h1>
-                        <p>Описание: {{ project.description }}</p>
-                        <p>Статус: {{ project.status }}</p>
-                        <p>Тип проекта: {{ project.type }}</p>
-                        <p>Дата начала проекта: {{ project.plan_start_date }}</p>
-                        <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
-                        {% if project.tasks_list %}
-                            <h3><a href="{% url 'show_tasks_list' project.tasks_list %}">Задачи по проекту</a></h3>
-                        {% else %}
-                            <p>Задачи не назначены на проект</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <h2>Вам пока не назначены проекты.</h2>
-            {% endif %}
-        </div>
-    </div>
+<link rel="stylesheet" href="{% static 'css/users_list.css' %}">
+<div class="sort">
+    <form method="get" id="sortForm">
+        <label for="sortSelect">Сортировать по:</label>
+        <select name="sort_by" id="sortSelect" onchange="document.getElementById('sortForm').submit()">
+            {% for field, display_name in sort_fields.items %}
+                <option value="{{ field }}" {% if field == sort_by %}selected{% endif %}>
+                    {{ display_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+<h2>Список проектов:</h2>
+<div class="workers">
+    {% if projects %}
+        {% for project in projects %}
+            <div class="worker">
+                <h2>{{ project.project_name }}</h2>
+                <p>Описание: {{ project.description }}</p>
+                <p>Статус: {{ project.status }}</p>
+                <p>Тип проекта: {{ project.type }}</p>
+                <p>Дата начала проекта: {{ project.plan_start_date }}</p>
+                <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
+                {% if project.tasks_list %}
+                    <p><a href="{% url 'show_tasks_list' project.tasks_list %}">Задачи по проекту</a></p>
+                {% else %}
+                    <p>Задачи не назначены на проект</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>Вам пока не назначены проекты.</h2>
+    {% endif %}
+</div>
 {% endblock %}
