@@ -46,17 +46,27 @@ def index(request):
     return render(request, 'project/basic.html')
 @admin_required
 def show_all_managers(request):
-    '''
-    Метод отображения менеджеров для администраторов
-    :param request:
-    :return:
-    '''
-    managers = Responsible.objects.all()
+    sort_by = request.GET.get('sort_by', 'surname')  # По умолчанию сортировка по фамилии
+    
+    ALLOWED_SORT_FIELDS = {
+        'surname': 'Фамилия',
+        'name': 'Имя',
+        'email': 'Email',
+    }
+    
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'surname'
+        
+    managers = Responsible.objects.all().order_by(sort_by)
     projects = Projects.objects.all()
+    
     context = {
         'managers': managers,
         'projects': projects,
+        'sort_by': sort_by,
+        'sort_fields': ALLOWED_SORT_FIELDS,
     }
+    
     return render(request, 'project/manager_info.html', context)
 @admin_required
 def create_project(request):
