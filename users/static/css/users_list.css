@@ -69,6 +69,20 @@
 .worker a:hover {
     background: #357abd;
 }
+.worker a:active {
+    background: #285e9e;
+}
+.worker a[href*="delete"] {
+    background: #dc3545;
+}
+
+.worker a[href*="delete"]:hover {
+    background: #c82333;
+}
+
+.worker a[href*="delete"]:active {
+    background: #bd2130;
+}
 
 @media (max-width: 768px) {
     .workers {

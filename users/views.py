@@ -113,11 +113,8 @@ def delete_user(request, worker_id):
     try:
         from django.db import connection
         with connection.cursor() as cursor:
-            # Удаляем записи из auth_user_groups если они есть
             cursor.execute("DELETE FROM auth_user_groups WHERE user_id = %s", [worker_id])
-            # Удаляем записи из auth_user_user_permissions если они есть
             cursor.execute("DELETE FROM auth_user_user_permissions WHERE user_id = %s", [worker_id])
-            # Удаляем самого пользователя
             cursor.execute("DELETE FROM workers WHERE worker_id = %s", [worker_id])
         return HttpResponseRedirect(reverse('show_users'))
     except Exception as e:
