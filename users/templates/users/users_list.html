@@ -12,7 +12,7 @@
                     </option>
                 {% endfor %}
             </select>
-        </form>    
+    </form>    
 </div>
 <div class="workers">
         {% for worker in workers %}
@@ -44,7 +44,7 @@
                 </p>
                 <p>
                     <a href="{% url 'change_user_position' worker.worker_id %}">Поменять должность</a>
-                    <a href="{% url 'delete_user' worker.worker_id %}">Удалить</a>
+                    <a href="{% url 'show_delete_user' worker.worker_id %}">Удалить</a>
                 </p>
             </div>
         {% endfor %}

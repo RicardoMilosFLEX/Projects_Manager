@@ -46,17 +46,27 @@ def index(request):
     return render(request, 'project/basic.html')
 @admin_required
 def show_all_managers(request):
-    '''
-    Метод отображения менеджеров для администраторов
-    :param request:
-    :return:
-    '''
-    managers = Responsible.objects.all()
+    sort_by = request.GET.get('sort_by', 'surname')  # По умолчанию сортировка по фамилии
+    
+    ALLOWED_SORT_FIELDS = {
+        'surname': 'Фамилия',
+        'name': 'Имя',
+        'email': 'Email',
+    }
+    
+    if sort_by not in ALLOWED_SORT_FIELDS:
+        sort_by = 'surname'
+        
+    managers = Responsible.objects.all().order_by(sort_by)
     projects = Projects.objects.all()
+    
     context = {
         'managers': managers,
         'projects': projects,
+        'sort_by': sort_by,
+        'sort_fields': ALLOWED_SORT_FIELDS,
     }
+    
     return render(request, 'project/manager_info.html', context)
 @admin_required
 def create_project(request):
@@ -250,6 +260,16 @@ def show_project_for_worker(request, worker_id):
                'sort_by': sort_by,
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_project_for_worker.html', context)
+
+def show_delete_project(request, project_id):
+    '''
+    Метод возвращает страницу для удаления проекта
+    :param request:
+    :return: delete_project.html
+    '''
+    project = get_object_or_404(Projects, pk=project_id)
+    context = {'project': project}
+    return render(request, 'project/delete_project.html', context)
 
 def delete_project(request, project_id):
     '''

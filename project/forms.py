@@ -52,20 +52,19 @@ class TaskForm(forms.ModelForm):
         }
 
 class ChangeProjectForm(forms.ModelForm):
+    start_date = forms.DateField(label = 'Дата начала', widget=forms.DateInput(
+        attrs={'type': 'date', 'class': 'datepicker'}
+    ))
+    plan_finish_date = forms.DateField(label = 'Дата окончания', widget=forms.DateInput(
+        attrs={'type': 'date', 'class': 'datepicker'}
+    ))
     class Meta:
         model = Projects
         fields = ('project_name', 'description',
                   'status', 'responsible',
-                  'plan_start_date', 'plan_finish_date',
+                  'start_date', 'plan_finish_date',
                   'client', 'type', 'tasks_list')
-        widgets = {
-            'plan_start_date': forms.DateInput(
-                attrs={'type': 'date', 'class': 'datepicker'}
-            ),
-            'plan_finish_date': forms.DateInput(
-                attrs={'type': 'date', 'class': 'datepicker'}
-            )
-        }
+        
 
         labels = {
             'project_name' : 'Название проекта',

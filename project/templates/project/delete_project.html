@@ -1,0 +1,24 @@
+{% extends 'project/basic.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
+    <div class="title">
+        <h1>Удаление проекта {{project.project_name}}</h1>
+    </div>
+    <div class="create_project">
+        <div class="alert alert-warning">
+            <h2>Название: {{project.project_name}}</h2>
+            <h3>Описание: {{project.description}}</h3>
+            <p>Клиент: {{project.client.name }} {{project.client.surname}}</p>
+            <p>Email клиента: {{project.client.email}}</p>
+            <p>Вы действительно хотите удалить этот проект?</p>
+            <div class="mt-3">
+                <form method="post" action="{% url 'delete_project' project.project_id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                    <a href="{% url 'projects' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
