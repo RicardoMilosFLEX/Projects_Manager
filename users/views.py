@@ -110,9 +110,19 @@ def show_delete_user(request, worker_id):
 
 def delete_user(request, worker_id):
     '''Удаление пользователя'''
-    worker = get_object_or_404(Workers, pk=worker_id)
-    worker.delete()
-    return HttpResponseRedirect(reverse('show_users'))
+    try:
+        from django.db import connection
+        with connection.cursor() as cursor:
+            # Удаляем записи из auth_user_groups если они есть
+            cursor.execute("DELETE FROM auth_user_groups WHERE user_id = %s", [worker_id])
+            # Удаляем записи из auth_user_user_permissions если они есть
+            cursor.execute("DELETE FROM auth_user_user_permissions WHERE user_id = %s", [worker_id])
+            # Удаляем самого пользователя
+            cursor.execute("DELETE FROM workers WHERE worker_id = %s", [worker_id])
+        return HttpResponseRedirect(reverse('show_users'))
+    except Exception as e:
+        logger.error(f"Ошибка при удалении пользователя: {e}")
+        return HttpResponseRedirect(reverse('show_users'))
 
 def register(request):
     '''Регистрация нового пользователя'''

@@ -1,9 +1,8 @@
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import  AbstractUser
 from django.db import models
-from django.db.models import Model, CharField
+from django.db.models import  CharField
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import  BaseUserManager
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -22,22 +21,6 @@ class ListPositions(models.Model):
 
     def __str__(self):
         return self.position_name
-
-# не особо корректно работает (Может и не надо это)
-# class WorkersGroups(models.Model):
-#     '''Модель групп сотрудников'''
-#     group_id = models.AutoField(primary_key=True)
-#     task = models.ForeignKey('project.Tasks', on_delete=models.DO_NOTHING, related_name='tasks', null=True)
-#
-#     class Meta:
-#         db_table = 'workers_groups'
-#         managed = False
-#         verbose_name = 'workers group'
-#         verbose_name_plural = 'workers groups'
-#     #
-#     # def __str__(self):
-#     #     return self.group_id
-
 class CustomUserManager(BaseUserManager):
     '''Класс для управления моделью пользователя'''
 
@@ -75,8 +58,6 @@ class Workers(AbstractUser):
                                     on_delete=models.PROTECT,
                                     related_name='position',
                                     to_field='position_id')
-    # group_name = models.ForeignKey(WorkersGroups, on_delete=models.DO_NOTHING,
-    #                                related_name='+', blank=True, null=True)
     password = models.CharField(max_length=500)
 
 
@@ -145,26 +126,3 @@ class Responsible(models.Model):
         verbose_name = 'responsible'
         verbose_name_plural = 'responsible'
 
-
-
-# class Users(models.Model):
-#     user = models.OneToOneField(Workers,
-#                                    on_delete=models.CASCADE,
-#                                    related_name='user',
-#                                    primary_key=True)
-#     email = models.EmailField(max_length=50,
-#                               unique=True)
-#     password = models.CharField(max_length=50)
-#     position = models.ForeignKey(ListPositions,
-#                                     on_delete=models.CASCADE,
-#                                     related_name='users_position',
-#                                     to_field='position_id')
-#
-#     def __str__(self):
-#         return self.email
-#
-#     class Meta:
-#         db_table = 'users'
-#         managed = False
-#         verbose_name = 'user'
-#         verbose_name_plural = 'users'
