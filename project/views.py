@@ -132,9 +132,12 @@ def change_project(request, project_id):
             form.save()
             return HttpResponseRedirect(reverse('projects'))
     else:
-
-        form = ChangeProjectForm(instance=project)
-    context = {'change_project_form': form}
+        initial_data = {
+            'plan_start_date': project.plan_start_date,
+            'plan_finish_date': project.plan_finish_date
+        }
+        form = ChangeProjectForm(instance=project, initial=initial_data)
+    context = {'change_project_form': form, 'project': project}
     return render(request, 'project/change_project.html', context)
 def create_task(request):
     '''
@@ -162,7 +165,7 @@ def change_task(request, task_id):
     :return:
     '''
     task = get_object_or_404(Tasks, pk=task_id)
-    task_list = get_object_or_404(TaskLists, pk=task_id)
+    task_list = task.list
     if request.method == 'POST':
         form = ChangeTaskForm(data=request.POST, instance=task)
         if form.is_valid():
@@ -271,6 +274,20 @@ def show_delete_project(request, project_id):
     context = {'project': project}
     return render(request, 'project/delete_project.html', context)
 
+def show_delete_task(request, task_id):
+    """Метод возвращает страницу для удаления задачи
+
+    Args:
+        request (request): запрос
+        task_id (int): id задачи
+
+    Returns:
+        render: страница для удаления задачи
+    """
+    task = get_object_or_404(Tasks, pk=task_id)
+    context = {'task': task}
+    return render(request, 'project/delete_tasks.html', context)
+    
 def delete_project(request, project_id):
     '''
     Удаление проектов

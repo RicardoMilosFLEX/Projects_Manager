@@ -1,5 +1,4 @@
 from django import forms
-from django.db.models import Model
 
 from project.models import Projects, Tasks
 
@@ -52,17 +51,20 @@ class TaskForm(forms.ModelForm):
         }
 
 class ChangeProjectForm(forms.ModelForm):
-    start_date = forms.DateField(label = 'Дата начала', widget=forms.DateInput(
+    plan_start_date = forms.DateField(label = 'Дата начала', widget=forms.DateInput(
         attrs={'type': 'date', 'class': 'datepicker'}
     ))
     plan_finish_date = forms.DateField(label = 'Дата окончания', widget=forms.DateInput(
-        attrs={'type': 'date', 'class': 'datepicker'}
-    ))
+        attrs={'type': 'date',
+               'class': 'datepicker',
+               'format': '%Y-%m-%d'}
+    ),
+    input_formats=['%Y-%m-%d'])
     class Meta:
         model = Projects
         fields = ('project_name', 'description',
                   'status', 'responsible',
-                  'start_date', 'plan_finish_date',
+                  'plan_start_date', 'plan_finish_date',
                   'client', 'type', 'tasks_list')
         
 
