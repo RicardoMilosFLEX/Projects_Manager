@@ -360,11 +360,9 @@ def generate_pdf(request):
 
     tasks = Tasks.objects.all()
 
-    # Рендерим HTML-шаблон
     template = get_template('project/report.html')
     html = template.render({'tasks': tasks})
 
-    # Генерируем PDF
     font_path = 'project/static/img/DejaVuSans.ttf'
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
