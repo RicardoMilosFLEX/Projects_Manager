@@ -12,8 +12,6 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .models import Tasks
 from .decorators import admin_required, manager_required, worker_required
-from django.shortcuts import get_object_or_404, redirect
-from .models import Tasks
 
 def index(request):
     '''
@@ -188,6 +186,9 @@ def show_projects_for_managers(request, manager_id : int):
     :param manager_id: int
     :return: show_projects_for_managers.html
     '''
+    if request.user.worker_id != manager_id:
+        return HttpResponseRedirect(reverse('index'))
+    
     sort_by = request.GET.get('sort_by', 'project_name')
     ALLOWED_SORT_FIELDS = {
         'project_name': 'Название',
@@ -212,6 +213,11 @@ def show_tasks_for_managers(request, task_list):
     :param task_list:
     :return: show_projects_for_managers.html
     '''
+    list_id = get_object_or_404(TaskLists, list_name=task_list)
+    project = Projects.objects.filter(tasks_list=list_id).first()
+    if not project or project.responsible.responsible_id != request.user.worker_id:
+        messages.error(request, 'У вас нет доступа к этим задачам')
+        return HttpResponseRedirect(reverse('index'))
     sort_by = request.GET.get('sort_by', 'description')
     ALLOWED_SORT_FIELDS = {
         'description': 'Описание',
