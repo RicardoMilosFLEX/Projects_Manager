@@ -3,7 +3,7 @@ import json
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from project.forms import ProjectForm, TaskForm, ChangeProjectForm, ChangeTaskForm
 from project.models import Projects, Tasks, TaskLists
 from users.models import Workers, Responsible
@@ -12,6 +12,8 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .models import Tasks
 from .decorators import admin_required
+from django.shortcuts import get_object_or_404, redirect
+from .models import Tasks
 
 def index(request):
     '''
@@ -263,7 +265,21 @@ def show_project_for_worker(request, worker_id):
                'sort_by': sort_by,
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_project_for_worker.html', context)
-
+def update_task_status(request, task_id):
+    '''
+    Метод обновляет статус задачи
+    :param request:
+    :param task_id:
+    :return: redirect на страницу задач
+    '''
+    if request.method == 'POST':
+        task = get_object_or_404(Tasks, pk=task_id)
+        new_status_id = request.POST.get('status')
+        if new_status_id:
+            task.status_id = new_status_id
+            task.save()
+        return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
+    return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
 def show_delete_project(request, project_id):
     '''
     Метод возвращает страницу для удаления проекта

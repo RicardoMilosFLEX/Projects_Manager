@@ -34,3 +34,15 @@
 .cancel-button:hover {
     background: #5a6268;
 }
+
+.worker select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.worker select:hover {
+    border-color: #4a90e2;
+}
