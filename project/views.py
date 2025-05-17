@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from .models import Tasks
-from .decorators import admin_required
+from .decorators import admin_required, manager_required, worker_required
 from django.shortcuts import get_object_or_404, redirect
 from .models import Tasks
 
@@ -141,6 +141,7 @@ def change_project(request, project_id):
         form = ChangeProjectForm(instance=project, initial=initial_data)
     context = {'change_project_form': form, 'project': project}
     return render(request, 'project/change_project.html', context)
+@manager_required
 def create_task(request):
     '''
     Обработка создания задач для проектов (для менеджеров)
@@ -158,7 +159,7 @@ def create_task(request):
         form = TaskForm()
     context = {'start_task_form': form}
     return render(request, 'project/create_tasks.html', context)
-
+@manager_required
 def change_task(request, task_id):
     '''
     Отображает форму для изменения задачи для менеджера
@@ -179,6 +180,7 @@ def change_task(request, task_id):
         'change_task_form': form,
                }
     return render(request, 'project/change_task.html', context)
+@manager_required
 def show_projects_for_managers(request, manager_id : int):
     '''
     Отображает и сортирует проекты для конкретного менеджера
@@ -202,7 +204,7 @@ def show_projects_for_managers(request, manager_id : int):
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_projects_for_managers.html', context)
 
-
+@manager_required
 def show_tasks_for_managers(request, task_list):
     '''
     Отображает и сортирует задачи по проекту для менеджеров
@@ -226,7 +228,7 @@ def show_tasks_for_managers(request, task_list):
                'sort_by': sort_by,
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_tasks.html', context)
-
+@worker_required
 def show_and_sort_tasks_for_workers(request, worker_id):
     sort_by = request.GET.get('sort_by', 'priority')
     ALLOWED_SORT_FIELDS = {
@@ -242,6 +244,7 @@ def show_and_sort_tasks_for_workers(request, worker_id):
                'sort_by': sort_by,
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_tasks_for_worker.html', context)
+@worker_required
 def show_project_for_worker(request, worker_id):
     '''
     Отображение проекта над которым работает разработчик
@@ -265,6 +268,7 @@ def show_project_for_worker(request, worker_id):
                'sort_by': sort_by,
                'sort_fields': ALLOWED_SORT_FIELDS,}
     return render(request, 'project/show_project_for_worker.html', context)
+@worker_required
 def update_task_status(request, task_id):
     '''
     Метод обновляет статус задачи
@@ -280,6 +284,7 @@ def update_task_status(request, task_id):
             task.save()
         return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
     return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
+@admin_required
 def show_delete_project(request, project_id):
     '''
     Метод возвращает страницу для удаления проекта
@@ -289,7 +294,7 @@ def show_delete_project(request, project_id):
     project = get_object_or_404(Projects, pk=project_id)
     context = {'project': project}
     return render(request, 'project/delete_project.html', context)
-
+@manager_required
 def show_delete_task(request, task_id):
     """Метод возвращает страницу для удаления задачи
 
@@ -303,7 +308,7 @@ def show_delete_task(request, task_id):
     task = get_object_or_404(Tasks, pk=task_id)
     context = {'task': task}
     return render(request, 'project/delete_tasks.html', context)
-    
+@admin_required
 def delete_project(request, project_id):
     '''
     Удаление проектов
@@ -316,7 +321,7 @@ def delete_project(request, project_id):
         project.delete()
         messages.success(request, "Проект успешно удалён.")
     return HttpResponseRedirect(reverse('projects'))
-
+@manager_required
 def delete_task(request, task_id):
     '''
     Удаление задач
