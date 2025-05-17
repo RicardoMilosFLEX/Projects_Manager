@@ -29,13 +29,11 @@
                     <form method="post" action="{% url 'update_task_status' task.task_id %}" style="display: flex; gap: 10px;">
                         {% csrf_token %}
                         <button type="submit" name="status" value="3" class="status-circle not-started {% if task.status_id == 3 %}active{% endif %}" title="Не начата">
-                            3
                         </button>
                         <button type="submit" name="status" value="2" class="status-circle in-progress {% if task.status_id == 2 %}active{% endif %}" title="В процессе">
-                            2
                         </button>
                         <button type="submit" name="status" value="1" class="status-circle completed {% if task.status_id == 1 %}active{% endif %}" title="Завершена">
-                            1
+                            
                         </button>
                     </form>
                 </div>
