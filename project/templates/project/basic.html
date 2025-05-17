@@ -33,7 +33,6 @@
                         <a href="{% url 'check_projects_for_manager' user.worker_id %}">
                             Посмотреть ваши проекты
                         </a>
-                        <a href="{% url 'generate_pdf' %}">Сгенерировать отчет по задачам</a>
                     {% else %}
                         <a href="{% url 'show_worker_project' user.worker_id %}" >Посмотреть ваши проекты</a>
                         <a href="{% url 'show_tasks_for_workers' user.worker_id  %}">Посмотреть ваши задачи</a>
@@ -42,7 +41,7 @@
                 {% else %}
                     <div class="login_button">
                         <a href="{% url 'login' %}" class="btn btn-outline-secondary">Войти в систему</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-secondary">Зарегистрироваться в системе</a>
+                        {% comment %} <a href="{% url 'register' %}" class="btn btn-outline-secondary">Зарегистрироваться в системе</a> {% endcomment %}
                     </div>
                 {% endif %}
             </div>

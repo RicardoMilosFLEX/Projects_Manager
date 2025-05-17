@@ -19,4 +19,5 @@ urlpatterns = [
     path('delete_task/<int:task_id>', delete_task, name='delete_task'),
     path('calendar/<int:worker_id>', show_calendar, name='show_calendar'),
     path('generate-report/', generate_pdf, name='generate_pdf'),
+    path('update-task-status/<int:task_id>/', update_task_status, name='update_task_status'),
 ]
