@@ -208,14 +208,18 @@ body {
     line-height: 1.4;
 }
 
-.project h3 a {
-    color: cornflowerblue;
+.project h4 a {
+    color: white;
+    background-color: cornflowerblue;
     text-decoration: none;
     font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
 }
 
-.project h3 a:hover {
-    text-decoration: underline;
+.project h4 a:hover {
+    background-color: #4a7edd;
+    transition: background-color 0.2s;
 }
 
 .project .btn-danger {
