@@ -16,7 +16,7 @@
                 ProjectSea</h1>
             <div class="auth-links">
                 {% if user.is_authenticated %}
-                    <h3>Пользователь: {{ user.first_name }} {{ user.last_name }} - {{ user.position }}</h3>
+                    <h3>{{ user.first_name }} {{ user.last_name }} - {{ user.position }}</h3>
 
                     <a href="{% url 'logout' %}">Выйти</a>
                     <a href="{% url 'change_user' user.worker_id %}">Редактировать профиль</a>
@@ -48,7 +48,7 @@
         </div>
     </div>
 </header>
-<div>
+<div>     
     {% block content %}
     {% endblock %}
 </div>

@@ -6,43 +6,73 @@
 
 .greeting-nav {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 }
 
 .greeting {
-    margin: 0;
+    margin: 0 0 20px 0;
     font-size: 2em;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .auth-links {
+    width: 100%;
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 30px;
 }
 
 .auth-links h3 {
     color: white;
     margin: 0;
     font-size: 1em;
+    position: absolute;
+    top: 0;
+    right: 6%;
+    padding: 8px 16px;
 }
 
-.auth-links a {
+.auth-links a[href*="logout"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    margin: 0;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+}
+
+.auth-links a[href*="logout"]:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-links a:not([href*="logout"]) {
     color: white;
     text-decoration: none;
     padding: 8px 16px;
     border-radius: 4px;
     transition: all 0.3s ease;
     background-color: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    flex: 0 1 auto;
+    white-space: nowrap;
 }
 
-.auth-links a:hover {
+.auth-links a:not([href*="logout"]):hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
@@ -201,4 +231,57 @@ body {
 
 .project .btn-danger:hover {
     background-color: #c82333;
+}
+
+
+.welcome-block {
+    max-width: 1200px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.welcome-block h2 {
+    color: #172b4d;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.welcome-block p {
+    color: #5e6c84;
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature-item {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-item h3 {
+    color: cornflowerblue;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.feature-item p {
+    color: #5e6c84;
+    font-size: 1em;
+    line-height: 1.6;
+    margin: 0;
 }

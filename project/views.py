@@ -43,7 +43,14 @@ def index(request):
             return HttpResponseRedirect(reverse('check_projects_for_manager', args=[request.user.worker_id]))
         else:  # Рабочий
             return HttpResponseRedirect(reverse('show_tasks_for_workers', args=[request.user.worker_id]))
-    return render(request, 'project/basic.html')
+    return render(request, 'project/main_page.html')
+def main(request):
+    '''
+    Метод возвращает главную страницу в зависимости от роли пользователя
+    :param request:
+    :return: соответствующий шаблон
+    '''
+    return render(request, 'project/main_page.html')
 @admin_required
 def show_all_managers(request):
     sort_by = request.GET.get('sort_by', 'surname')  # По умолчанию сортировка по фамилии
