@@ -21,3 +21,16 @@ def manager_required(view_func):
             return HttpResponseRedirect(reverse('index'))
         return view_func(request, *args, **kwargs)
     return _wrapped_view
+
+def worker_required(view_func):
+    """Декоратор для проверки, является ли пользователь работником.
+
+    Args:
+        view_func (func): Функция представления.
+    """
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.position_id!= 3:
+            return HttpResponseRedirect(reverse('index'))
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
