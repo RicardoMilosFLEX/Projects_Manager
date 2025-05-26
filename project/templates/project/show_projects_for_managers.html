@@ -25,12 +25,9 @@
                 <p>Тип проекта: {{ project.type }}</p>
                 <p>Дата начала проекта: {{ project.plan_start_date }}</p>
                 <p>Дата окончания проекта: {{ project.plan_finish_date }}</p>
-                {% if project.tasks_list %}
+                {% if project.tasks_list and project.status_id != 4 %}
                     <p><a href="{% url 'show_tasks_list' project.tasks_list %}">Задачи по проекту</a></p>
-                {% else %}
-                    <p>Задачи не назначены на проект</p>
-                {% endif %}
-                <div class="status-circles">
+                    <div class="status-circles">
                     <form method="post" action="{% url 'update_project_status' project.project_id %}" style="display: flex; gap: 10px;">
                         {% csrf_token %}
                         <button type="submit" name="status" value="3" class="status-circle not-started {% if project.status_id == 3 %}active{% endif %}" title="Не начата">
@@ -42,6 +39,12 @@
                         </button>
                     </form>
                 </div>
+                {% elif project.status_id == 4 %}
+                    <p><strong>Проект приостановлен</strong></p>
+                {% else %}
+                    <p>Задачи не назначены на проект</p>
+                {% endif %}
+
             </div>
         {% endfor %}
     {% else %}

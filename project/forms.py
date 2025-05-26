@@ -4,6 +4,7 @@ from project.models import Projects, Tasks
 
 class ProjectForm(forms.ModelForm):
     """Форма для создания новых проектов"""
+    project_name = forms.CharField(max_length=30, label='Название проекта')
     plan_start_date = forms.DateField(label='Дата старта проекта',
                                       widget=forms.DateInput(
                                           attrs={'type':'date',

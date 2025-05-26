@@ -25,6 +25,7 @@
                 <p>Планируемая дата завершения задачи: {{ task.plan_finish_date }}</p>
                 <p>Приоритет: {{ task.priority }}</p>
                 <p>Статус: {{ task.status }}</p>
+                {% if task.status_id != 4 %}
                 <div class="status-circles">
                     <form method="post" action="{% url 'update_task_status' task.task_id %}" style="display: flex; gap: 10px;">
                         {% csrf_token %}
@@ -37,6 +38,9 @@
                         </button>
                     </form>
                 </div>
+                {% else %}
+                <p>Задача недоступна</p>
+                {% endif %}
             </div>
         {% endfor %}
     {% else %}
