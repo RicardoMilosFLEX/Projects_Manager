@@ -36,11 +36,11 @@
                         <p>Нет рабочего телефона</p>
                     {% endif %}
                     <p>Должность: {{ worker.position }}</p>
-                    {% if worker.group_name %}
+                    {% comment %} {% if worker.group_name %}
                         <p>Группа сотрудников: {{ worker.group_name }}</p>
                     {% else %}
                         <p>Не состоит в группе</p>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </p>
                 <p>
                     <a href="{% url 'change_user_position' worker.worker_id %}">Поменять должность</a>
