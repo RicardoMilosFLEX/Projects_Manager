@@ -21,4 +21,5 @@ urlpatterns = [
     path('calendar/<int:worker_id>', show_calendar, name='show_calendar'),
     path('generate-report/', generate_pdf, name='generate_pdf'),
     path('update-task-status/<int:task_id>/', update_task_status, name='update_task_status'),
+    path('update-project-status/<int:project_id>/', update_project_status, name='update_project_status')
 ]

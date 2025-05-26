@@ -30,6 +30,18 @@
                 {% else %}
                     <p>Задачи не назначены на проект</p>
                 {% endif %}
+                <div class="status-circles">
+                    <form method="post" action="{% url 'update_project_status' project.project_id %}" style="display: flex; gap: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" name="status" value="3" class="status-circle not-started {% if project.status_id == 3 %}active{% endif %}" title="Не начата">
+                        </button>
+                        <button type="submit" name="status" value="2" class="status-circle in-progress {% if project.status_id == 2 %}active{% endif %}" title="В процессе">
+                        </button>
+                        <button type="submit" name="status" value="1" class="status-circle completed {% if project.status_id == 1 %}active{% endif %}" title="Завершена">
+                            
+                        </button>
+                    </form>
+                </div>
             </div>
         {% endfor %}
     {% else %}

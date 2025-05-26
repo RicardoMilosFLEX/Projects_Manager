@@ -297,6 +297,22 @@ def update_task_status(request, task_id):
             task.save()
         return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
     return redirect('show_tasks_for_workers', worker_id=request.user.worker_id)
+@manager_required
+def update_project_status(request, project_id):
+    '''
+    Метод обновляет статус проекта
+    :param request:
+    :param project_id:
+    :return: redirect на страницу проектов
+    '''
+    if request.method == 'POST':
+        project = get_object_or_404(Projects, pk=project_id)
+        new_status_id = request.POST.get('status')
+        if new_status_id:
+            project.status_id = new_status_id
+            project.save()
+        return redirect('check_projects_for_manager', manager_id=request.user.worker_id)
+    return redirect('check_projects_for_manager', manager_id=request.user.worker_id)
 @admin_required
 def show_delete_project(request, project_id):
     '''

@@ -2,7 +2,6 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 
-from project.models import Projects
 from users.models import Workers
 
 class CustomUserCreationForm(forms.ModelForm):
