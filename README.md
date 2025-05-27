@@ -5,7 +5,6 @@
 ___
 - Python 3.12
 - Django 5.2
-- Django Rest Framework 3.16
 - PostgreSQL
 ### Установка проекта
 ___
